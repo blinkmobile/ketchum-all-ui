@@ -5,3 +5,9 @@
 .App-intro {
   font-size: large;
 }
+
+.Main {}
+
+.Main-drawer-open {
+  margin-left: 256px
+}
