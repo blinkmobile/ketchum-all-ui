@@ -57,23 +57,65 @@
     {
       "id": "cdn-01",
       "name": "CDN (multi-tenant)",
-      "description": "",
+      "description": "content hosting and delivery",
       "tenancy": "multi",
       "type": "cdn"
     },
     {
       "id": "faas-01",
       "name": "FaaS (multi-tenant)",
-      "description": "",
+      "description": "function-as-a-service",
       "tenancy": "multi",
       "type": "faas"
     },
     {
       "id": "faas-02",
       "name": "FaaS for Hogwarts",
-      "description": "",
+      "description": "function-as-a-service",
       "tenancy": "single",
       "type": "faas"
+    },
+    {
+      "id": "git-01",
+      "name": "GitLab (multi-tenant)",
+      "description": "git repository hosting",
+      "tenancy": "multi",
+      "type": "git"
+    },
+    {
+      "id": "git-02",
+      "name": "GitLab for Durmstrang",
+      "description": "git repository hosting",
+      "tenancy": "single",
+      "type": "git"
+    },
+    {
+      "id": "ci-01",
+      "name": "GitLab CI (multi-tenant)",
+      "description": "continuous integration (automation)",
+      "tenancy": "multi",
+      "type": "ci"
+    },
+    {
+      "id": "mm-01",
+      "name": "Mattermost (multi-tenant)",
+      "description": "team chatrooms and notifications",
+      "tenancy": "multi",
+      "type": "mattermost"
+    },
+    {
+      "id": "caas-01",
+      "name": "Kubernetes (multi-tenant)",
+      "description": "container-as-a-service task hosting",
+      "tenancy": "multi",
+      "type": "kubernetes"
+    },
+    {
+      "id": "caas-02",
+      "name": "Kubernetes for Beauxbatons",
+      "description": "container-as-a-service task hosting",
+      "tenancy": "single",
+      "type": "kubernetes"
     }
   ]
 }
