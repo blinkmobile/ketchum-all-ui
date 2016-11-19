@@ -4,7 +4,11 @@
   font-size: large;
 }
 
-.Main {}
+.Main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 .Main-drawer-open {
   margin-left: 256px

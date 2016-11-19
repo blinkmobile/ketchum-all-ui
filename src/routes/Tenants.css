@@ -1,0 +1,11 @@
+.TenantCard {
+  display: inline-block;
+  margin: 1em;
+  max-width: 20em;
+}
+
+.TenantAddFAB {
+  position: fixed;
+  bottom: 2em;
+  right: 2em;
+}

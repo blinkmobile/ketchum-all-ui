@@ -3,27 +3,27 @@
     {
       "id": "hogwarts",
       "name": "Hogwarts",
-      "description": ""
+      "description": "Highlands, Scotland"
     },
     {
       "id": "ilvermorny",
       "name": "Ilvermorny",
-      "description": ""
+      "description": "Mount Greylock, United States of America"
     },
     {
       "id": "durmstrang",
       "name": "Durmstrang Institute",
-      "description": ""
+      "description": "Scandinavia"
     },
     {
       "id": "beauxbatons",
       "name": "Beauxbatons Academy of Magic",
-      "description": ""
+      "description": "Pyrenees, France"
     },
     {
       "id": "castelobruxo",
       "name": "Castelobruxo",
-      "description": ""
+      "description": "Amazon rainforest, Brazil"
     }
   ],
   "solutions": [
@@ -33,7 +33,7 @@
       "description": "",
       "ownerTenant": "hogwarts",
       "otherTenants": []
-    },
+    }
   ],
   "projects": [
     {
@@ -51,7 +51,7 @@
       "ownerTenant": "hogwarts",
       "otherTenants": [],
       "service": "faas-02"
-    },
+    }
   ],
   "services": [
     {
@@ -74,6 +74,6 @@
       "description": "",
       "tenancy": "single",
       "type": "faas"
-    },
+    }
   ]
 }
