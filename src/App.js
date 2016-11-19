@@ -3,6 +3,7 @@ import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import React, { Component } from 'react'
 
+import DrawerProfile from './components/DrawerProfile'
 import './App.css'
 
 class App extends Component {
@@ -23,7 +24,9 @@ class App extends Component {
     const { isDrawerOpen } = this.state
     return (
       <div className='App'>
-        <Drawer docked open={isDrawerOpen} width={256} />
+        <Drawer docked open={isDrawerOpen} width={256}>
+          <DrawerProfile />
+        </Drawer>
 
         <main className={cn('Main', isDrawerOpen && 'Main-drawer-open')}>
           <AppBar onLeftIconButtonTouchTap={this.handleMenuButtonTap} title='Ketchum-All Registry' />
