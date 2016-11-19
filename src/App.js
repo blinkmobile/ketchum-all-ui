@@ -3,7 +3,8 @@ import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
 import React, { Component } from 'react'
 
-import DrawerProfile from './components/DrawerProfile'
+import DrawerNavigation from './components/DrawerNavigation.js'
+import DrawerProfile from './components/DrawerProfile.js'
 import './App.css'
 
 class App extends Component {
@@ -26,6 +27,7 @@ class App extends Component {
       <div className='App'>
         <Drawer docked open={isDrawerOpen} width={256}>
           <DrawerProfile />
+          <DrawerNavigation />
         </Drawer>
 
         <main className={cn('Main', isDrawerOpen && 'Main-drawer-open')}>
