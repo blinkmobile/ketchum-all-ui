@@ -12,16 +12,16 @@ class DrawerNavigation extends Component {
   render () {
     return (
       <List>
-        <Link to='/' className='DrawerNavigationLink'>
+        <Link to='/solutions' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
           <ListItem primaryText='Solutions' leftIcon={<Work />} />
         </Link>
-        <Link to='/' className='DrawerNavigationLink'>
+        <Link to='/projects' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
           <ListItem primaryText='Projects' leftIcon={<Folder />} />
         </Link>
-        <Link to='/' className='DrawerNavigationLink'>
+        <Link to='/services' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
           <ListItem primaryText='Services' leftIcon={<Cloud />} />
         </Link>
-        <Link to='/' className='DrawerNavigationLink'>
+        <Link to='/tenants' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
           <ListItem primaryText='Tenants' leftIcon={<Business />} />
         </Link>
       </List>

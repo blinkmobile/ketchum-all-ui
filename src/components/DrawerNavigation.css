@@ -1,5 +1,9 @@
-.DrawerNavigation {}
+.DrawerNav {}
 
-.DrawerNavigationLink {
+.DrawerNavLink {
   text-decoration: none;
+}
+
+.DrawerNavLink-active {
+  font-weight: bold;
 }

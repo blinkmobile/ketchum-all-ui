@@ -1,7 +1,7 @@
 import cn from 'classnames'
 import AppBar from 'material-ui/AppBar'
 import Drawer from 'material-ui/Drawer'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 
 import DrawerNavigation from './components/DrawerNavigation.js'
 import DrawerProfile from './components/DrawerProfile.js'
@@ -23,6 +23,7 @@ class App extends Component {
 
   render () {
     const { isDrawerOpen } = this.state
+    const { children } = this.props
     return (
       <div className='App'>
         <Drawer docked open={isDrawerOpen} width={256}>
@@ -33,13 +34,15 @@ class App extends Component {
         <main className={cn('Main', isDrawerOpen && 'Main-drawer-open')}>
           <AppBar onLeftIconButtonTouchTap={this.handleMenuButtonTap} title='Ketchum-All Registry' />
 
-          <p className='App-intro'>
-            To get started, edit <code>src/App.js</code> and save to reload.
-          </p>
+          {children}
         </main>
       </div>
     )
   }
+}
+
+App.propTypes = {
+  children: PropTypes.element
 }
 
 export default App
