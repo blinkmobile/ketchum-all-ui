@@ -1,1 +1,1 @@
-# ketchum-all-ui
+# ketchum-all-ui [![npm](https://img.shields.io/npm/v/tenants-projects-ui.svg?maxAge=2592000)](https://www.npmjs.com/package/tenants-projects-ui) [![AppVeyor Status](https://img.shields.io/appveyor/ci/blinkmobile/ketchum-all-ui/master.svg)](https://ci.appveyor.com/project/blinkmobile/ketchum-all-ui) [![Travis CI Status](https://travis-ci.org/blinkmobile/ketchum-all-ui.svg?branch=master)](https://travis-ci.org/blinkmobile/ketchum-all-ui)
