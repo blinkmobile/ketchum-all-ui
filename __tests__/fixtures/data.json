@@ -1,0 +1,79 @@
+{
+  "tenants": [
+    {
+      "id": "hogwarts",
+      "name": "Hogwarts",
+      "description": ""
+    },
+    {
+      "id": "ilvermorny",
+      "name": "Ilvermorny",
+      "description": ""
+    },
+    {
+      "id": "durmstrang",
+      "name": "Durmstrang Institute",
+      "description": ""
+    },
+    {
+      "id": "beauxbatons",
+      "name": "Beauxbatons Academy of Magic",
+      "description": ""
+    },
+    {
+      "id": "castelobruxo",
+      "name": "Castelobruxo",
+      "description": ""
+    }
+  ],
+  "solutions": [
+    {
+      "id": "hogwarts-timetable",
+      "name": "Hogwarts Timetable",
+      "description": "",
+      "ownerTenant": "hogwarts",
+      "otherTenants": []
+    },
+  ],
+  "projects": [
+    {
+      "id": "hogwarts-timetable-web",
+      "name": "Hogwarts Timetable web app",
+      "description": "",
+      "ownerTenant": "hogwarts",
+      "otherTenants": [],
+      "service": "cdn-01"
+    },
+    {
+      "id": "hogwarts-timetable-svc",
+      "name": "Hogwarts Timetable Service",
+      "description": "",
+      "ownerTenant": "hogwarts",
+      "otherTenants": [],
+      "service": "faas-02"
+    },
+  ],
+  "services": [
+    {
+      "id": "cdn-01",
+      "name": "CDN (multi-tenant)",
+      "description": "",
+      "tenancy": "multi",
+      "type": "cdn"
+    },
+    {
+      "id": "faas-01",
+      "name": "FaaS (multi-tenant)",
+      "description": "",
+      "tenancy": "multi",
+      "type": "faas"
+    },
+    {
+      "id": "faas-02",
+      "name": "FaaS for Hogwarts",
+      "description": "",
+      "tenancy": "single",
+      "type": "faas"
+    },
+  ]
+}
