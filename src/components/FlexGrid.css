@@ -1,0 +1,9 @@
+.FlexGrid {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.FlexGrid > * {
+  margin: .2em;
+}
