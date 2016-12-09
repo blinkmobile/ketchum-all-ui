@@ -1,46 +1,44 @@
 import { Card, CardActions, CardHeader } from 'material-ui/Card'
 import FlatButton from 'material-ui/FlatButton'
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
+import { Link } from 'react-router'
+
+import { getToken } from '../redux/reducers/auth.js'
 
 import './DrawerProfile.css'
 
 class DrawerProfile extends Component {
-  constructor () {
-    super()
-
-    this.handleLogInClick = this.handleLogInClick.bind(this)
-    this.handleLogOutClick = this.handleLogOutClick.bind(this)
-    this.state = {
-      isLoggedIn: false
-    }
-  }
-
-  handleLogInClick () {
-    this.setState({ isLoggedIn: true })
-  }
-
-  handleLogOutClick () {
-    this.setState({ isLoggedIn: false })
-  }
-
   render () {
-    const { isLoggedIn } = this.state
-    return isLoggedIn ? (
+    const { token } = this.props
+    return token ? (
       <Card>
         <CardHeader title='Harry Potter' subtitle='hp@hogwarts.edu.uk' />
         <CardActions>
-          <FlatButton label='log out' onClick={this.handleLogOutClick} />
+          <Link to='/login'>
+            <FlatButton label='Log Out' />
+          </Link>
         </CardActions>
       </Card>
     ) : (
       <Card>
         <CardHeader title='Guest' subtitle='anonymous' />
         <CardActions>
-          <FlatButton label='log in' onClick={this.handleLogInClick} />
+          <Link to='/login'>
+            <FlatButton label='Log In' />
+          </Link>
         </CardActions>
       </Card>
     )
   }
 }
 
-export default DrawerProfile
+DrawerProfile.propTypes = {
+  token: PropTypes.string
+}
+
+const mapStateToProps = (state) => ({
+  token: getToken(state)
+})
+const mapDispatchToProps = {}
+export default connect(mapStateToProps, mapDispatchToProps)(DrawerProfile)
