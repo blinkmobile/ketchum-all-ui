@@ -18,6 +18,9 @@
   "dependencies": {
     "classnames": "^2.2.5",
     "immutable": "^3.8.1",
+    "jsonapi-client": "https://github.com/holidayextras/jsonapi-client#0.8.0",
+    "localforage": "^1.4.3",
+    "lodash.startcase": "^4.4.0",
     "material-ui": "^0.16.4",
     "react": "^15.4.0",
     "react-dom": "^15.4.0",
@@ -28,6 +31,9 @@
     "redux": "^3.6.0",
     "redux-create-reducer": "^1.1.1",
     "redux-immutable": "^3.0.8",
+    "redux-persist": "^4.0.0-beta1",
+    "redux-persist-immutable": "^4.0.1",
+    "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4"
   },
   "scripts": {

@@ -1,4 +1,7 @@
-import { createStore } from 'redux'
+import localForage from 'localforage/dist/localforage.nopromises.js'
+import { applyMiddleware, createStore, compose } from 'redux'
+import { autoRehydrate, persistStore } from 'redux-persist-immutable'
+import ReduxThunk from 'redux-thunk'
 import { hashHistory } from 'react-router'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { createSelector } from 'reselect'
@@ -6,10 +9,24 @@ import { createSelector } from 'reselect'
 import reducer from './reducer.js'
 import { getRouting } from './reducers/routing.js'
 
+const middleware = [
+  ReduxThunk
+]
+
+const composeEnhancers = (
+  process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
+) || compose
+
 export const store = createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  undefined,
+  composeEnhancers(
+    applyMiddleware(...middleware),
+    autoRehydrate()
+  )
 )
+
+persistStore(store, { storage: localForage })
 
 export const history = syncHistoryWithStore(hashHistory, store, {
   selectLocationState: createSelector(getRouting, (routing) => routing.toJS())
