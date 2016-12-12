@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 
 import { requestCloudaccounts } from '../redux/actions/cloudaccounts.js'
 import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
+import { getTenantsMap } from '../redux/reducers/tenants.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Cloudaccounts.css'
@@ -19,15 +20,15 @@ class Cloudaccounts extends Component {
   }
 
   render () {
-    const { cloudaccountsMap } = this.props
+    const { cloudaccountsMap, tenantsMap } = this.props
 
     return (
       <RouteSection>
         <Table multiSelectable>
           <TableHeader>
             <TableRow>
-              <TableHeaderColumn>Label</TableHeaderColumn>
               <TableHeaderColumn>AccountID</TableHeaderColumn>
+              <TableHeaderColumn>Tenant</TableHeaderColumn>
               <TableHeaderColumn>Tenancy</TableHeaderColumn>
               <TableHeaderColumn>Note</TableHeaderColumn>
             </TableRow>
@@ -35,12 +36,17 @@ class Cloudaccounts extends Component {
           <TableBody>
             { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
               const {
-                accountId, id, label, name, note, tenancy, vendor
+                accountId, id, name, note, tenancy, vendor,
+                tenant: relatedTenant
               } = cloudaccount.toJS()
+              let tenantLabel = ''
+              if (relatedTenant && tenantsMap.has(relatedTenant.id)) {
+                tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
+              }
               return (
                 <TableRow key={id}>
-                  <TableRowColumn title={name}>{label}</TableRowColumn>
-                  <TableRowColumn>{vendor} {accountId}</TableRowColumn>
+                  <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
+                  <TableRowColumn>{tenantLabel}</TableRowColumn>
                   <TableRowColumn>{tenancy}</TableRowColumn>
                   <TableRowColumn>{note}</TableRowColumn>
                 </TableRow>
@@ -57,12 +63,17 @@ class Cloudaccounts extends Component {
 }
 
 Cloudaccounts.propTypes = {
-  requestCloudaccounts: PropTypes.func,
-  cloudaccountsMap: PropTypes.instanceOf(Map)
+  // mapStateToProps
+  cloudaccountsMap: PropTypes.instanceOf(Map),
+  tenantsMap: PropTypes.instanceOf(Map),
+
+  // mapDispatchToProps
+  requestCloudaccounts: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  cloudaccountsMap: getCloudaccountsMap(state)
+  cloudaccountsMap: getCloudaccountsMap(state),
+  tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = { requestCloudaccounts }
 export default connect(mapStateToProps, mapDispatchToProps)(Cloudaccounts)
