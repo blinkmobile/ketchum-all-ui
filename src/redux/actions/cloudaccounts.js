@@ -1,6 +1,6 @@
 /* @flow */
 
-import { createCollectionActions } from '../helpers/collection.js'
+import { createCollectionActions } from '../helpers/collection/actions.js'
 
 const actions = createCollectionActions('cloudaccounts')
 

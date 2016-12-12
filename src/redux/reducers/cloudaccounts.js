@@ -1,6 +1,5 @@
-import {
-  createCollectionReducer, createCollectionSelectors
-} from '../helpers/collection.js'
+import { createCollectionReducer } from '../helpers/collection/reducer.js'
+import { createCollectionSelectors } from '../helpers/collection/selectors.js'
 
 export default createCollectionReducer('cloudaccounts')
 
