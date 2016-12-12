@@ -3,13 +3,14 @@ import { applyMiddleware, createStore, compose } from 'redux'
 import { autoRehydrate, persistStore } from 'redux-persist-immutable'
 import ReduxThunk from 'redux-thunk'
 import { hashHistory } from 'react-router'
-import { syncHistoryWithStore } from 'react-router-redux'
+import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 import { createSelector } from 'reselect'
 
 import reducer from './reducer.js'
 import { getRouting } from './reducers/routing.js'
 
 const middleware = [
+  routerMiddleware(hashHistory),
   ReduxThunk
 ]
 
@@ -21,8 +22,8 @@ export const store = createStore(
   reducer,
   undefined,
   composeEnhancers(
+    autoRehydrate(),
     applyMiddleware(...middleware),
-    autoRehydrate()
   )
 )
 

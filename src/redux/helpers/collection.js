@@ -1,11 +1,9 @@
 import { fromJS, Map, OrderedSet } from 'immutable'
-import JsonapiClient from 'jsonapi-client/lib/Client.js'
 import startCase from 'lodash.startcase'
 import { createReducer } from 'redux-create-reducer'
+import { push } from 'react-router-redux'
 
-import { getToken } from '../reducers/auth.js'
-
-const REGISTRY_ORIGIN = `${(process.env.REACT_APP_REGISTRY_ORIGIN || '')}/v1`
+import { createClient } from '../../lib/jsonapi.js'
 
 export const createCollectionActions = (type) => {
   type = type.toLowerCase()
@@ -18,21 +16,11 @@ export const createCollectionActions = (type) => {
       payload: resource
     }),
 
-    [`request${Type}`]: (resource) => {
+    [`request${Type}`]: () => {
       return (dispatch, getState) => {
-        const token = getToken(getState())
-        if (!token) {
-          console.warn('no authentication token yet!')
-          return
-        }
-
         dispatch({ type: `REQUEST_${TYPE}` })
-        const client = new JsonapiClient(REGISTRY_ORIGIN, {
-          header: {
-            authorization: `Bearer ${token}`
-          }
-        })
 
+        const client = createClient(getState())
         client.find(type, (err, resources) => {
           if (err) {
             console.error(err)
@@ -43,7 +31,34 @@ export const createCollectionActions = (type) => {
           })
         })
       }
-    }
+    },
+
+    [`create${Type}Submit`]: (values) => {
+      return (dispatch, getState) => {
+        values = values.toJS ? values.toJS() : values
+        dispatch({ type: `CREATE_${TYPE}_SUBMIT` })
+
+        const client = createClient(getState())
+        const resource = client.create(type, values)
+        resource.sync((err, resource) => {
+          if (err) {
+            console.error(err)
+            return
+          }
+          dispatch(actions[`create${Type}Success`](resource.toJSON()))
+        })
+      }
+    },
+
+    [`create${Type}Success`]: (resource) => {
+      return (dispatch, getState) => {
+        dispatch({ type: `CREATE_${TYPE}_SUCCESS` })
+        dispatch(actions[`create${Type}`](resource))
+        dispatch(push(`/${type}`))
+      }
+    },
+
+    [`create${Type}Error`]: () => ({ type: `CREATE_${TYPE}_ERROR` })
   }
 
   return actions

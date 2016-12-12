@@ -1,3 +1,4 @@
+import { reducer as formReducer } from 'redux-form/immutable'
 import { combineReducers } from 'redux-immutable'
 
 import auth from './reducers/auth.js'
@@ -11,6 +12,7 @@ import tenants from './reducers/tenants.js'
 export default combineReducers({
   auth,
   cloudaccounts,
+  form: formReducer,
   projects,
   routing,
   services,
