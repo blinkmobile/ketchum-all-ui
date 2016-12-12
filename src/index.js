@@ -13,6 +13,7 @@ import Projects from './routes/Projects.js'
 import Services from './routes/Services.js'
 import Solutions from './routes/Solutions.js'
 import Tenants from './routes/Tenants.js'
+import TenantsNew from './routes/TenantsNew.js'
 
 import { store, history } from './redux/store.js'
 
@@ -30,7 +31,9 @@ ReactDOM.render(
           <Route path='projects' component={Projects} />
           <Route path='services' component={Services} />
           <Route path='solutions' component={Solutions} />
-          <Route path='tenants' component={Tenants} />
+          <Route path='tenants' component={Tenants}>
+            <Route path='new' component={TenantsNew} />
+          </Route>
         </Route>
       </Router>
     </MuiThemeProvider>

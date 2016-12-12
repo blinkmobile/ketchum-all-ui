@@ -6,6 +6,7 @@ import {
 } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 import { requestTenants } from '../redux/actions/tenants.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
@@ -19,7 +20,7 @@ class Tenants extends Component {
   }
 
   render () {
-    const { tenantsMap } = this.props
+    const { children, tenantsMap } = this.props
 
     return (
       <RouteSection>
@@ -42,17 +43,26 @@ class Tenants extends Component {
             }) }
           </TableBody>
         </Table>
-        <FloatingActionButton className='TenantAddFAB'>
-          <ContentAdd />
-        </FloatingActionButton>
+        <Link to='/tenants/new'>
+          <FloatingActionButton className='TenantAddFAB'>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
+
+        {children}
       </RouteSection>
     )
   }
 }
 
 Tenants.propTypes = {
-  requestTenants: PropTypes.func,
-  tenantsMap: PropTypes.instanceOf(Map)
+  children: PropTypes.element,
+
+  // mapStateToProps
+  tenantsMap: PropTypes.instanceOf(Map),
+
+  // mapDispatchToProps
+  requestTenants: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
