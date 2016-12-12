@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux-immutable'
 
 import auth from './reducers/auth.js'
+import cloudaccounts from './reducers/cloudaccounts.js'
 import projects from './reducers/projects.js'
 import routing from './reducers/routing.js'
 import services from './reducers/services.js'
@@ -9,6 +10,7 @@ import tenants from './reducers/tenants.js'
 
 export default combineReducers({
   auth,
+  cloudaccounts,
   projects,
   routing,
   services,

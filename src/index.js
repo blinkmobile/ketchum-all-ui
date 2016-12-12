@@ -8,6 +8,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
 import Login from './routes/Login.js'
+import Cloudaccounts from './routes/Cloudaccounts.js'
 import Projects from './routes/Projects.js'
 import Services from './routes/Services.js'
 import Solutions from './routes/Solutions.js'
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Router history={history}>
         <Route path='/' component={App}>
           <IndexRedirect to='/solutions' />
+          <Route path='cloudaccounts' component={Cloudaccounts} />
           <Route path='login' component={Login} />
           <Route path='projects' component={Projects} />
           <Route path='services' component={Services} />

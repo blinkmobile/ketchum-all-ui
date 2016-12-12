@@ -7,19 +7,19 @@ import {
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { requestTenants } from '../redux/actions/tenants.js'
-import { getTenantsMap } from '../redux/reducers/tenants.js'
+import { requestCloudaccounts } from '../redux/actions/cloudaccounts.js'
+import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
 import RouteSection from '../components/RouteSection.js'
 
-import './Tenants.css'
+import './Cloudaccounts.css'
 
-class Tenants extends Component {
+class Cloudaccounts extends Component {
   componentDidMount () {
-    this.props.requestTenants()
+    this.props.requestCloudaccounts()
   }
 
   render () {
-    const { tenantsMap } = this.props
+    const { cloudaccountsMap } = this.props
 
     return (
       <RouteSection>
@@ -27,22 +27,28 @@ class Tenants extends Component {
           <TableHeader>
             <TableRow>
               <TableHeaderColumn>Label</TableHeaderColumn>
+              <TableHeaderColumn>AccountID</TableHeaderColumn>
+              <TableHeaderColumn>Tenancy</TableHeaderColumn>
               <TableHeaderColumn>Note</TableHeaderColumn>
             </TableRow>
           </TableHeader>
           <TableBody>
-            { Array.from(tenantsMap.values()).map((tenant) => {
-              const { id, label, name, note } = tenant.toJS()
+            { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
+              const {
+                accountId, id, label, name, note, tenancy, vendor
+              } = cloudaccount.toJS()
               return (
                 <TableRow key={id}>
                   <TableRowColumn title={name}>{label}</TableRowColumn>
+                  <TableRowColumn>{vendor} {accountId}</TableRowColumn>
+                  <TableRowColumn>{tenancy}</TableRowColumn>
                   <TableRowColumn>{note}</TableRowColumn>
                 </TableRow>
               )
             }) }
           </TableBody>
         </Table>
-        <FloatingActionButton className='TenantAddFAB'>
+        <FloatingActionButton className='CloudaccountsAddFAB'>
           <ContentAdd />
         </FloatingActionButton>
       </RouteSection>
@@ -50,13 +56,13 @@ class Tenants extends Component {
   }
 }
 
-Tenants.propTypes = {
-  requestTenants: PropTypes.func,
-  tenantsMap: PropTypes.instanceOf(Map)
+Cloudaccounts.propTypes = {
+  requestCloudaccounts: PropTypes.func,
+  cloudaccountsMap: PropTypes.instanceOf(Map)
 }
 
 const mapStateToProps = (state) => ({
-  tenantsMap: getTenantsMap(state)
+  cloudaccountsMap: getCloudaccountsMap(state)
 })
-const mapDispatchToProps = { requestTenants }
-export default connect(mapStateToProps, mapDispatchToProps)(Tenants)
+const mapDispatchToProps = { requestCloudaccounts }
+export default connect(mapStateToProps, mapDispatchToProps)(Cloudaccounts)

@@ -8,16 +8,17 @@ import { getToken } from '../reducers/auth.js'
 const REGISTRY_ORIGIN = `${(process.env.REACT_APP_REGISTRY_ORIGIN || '')}/v1`
 
 export const createCollectionActions = (type) => {
+  type = type.toLowerCase()
   const TYPE = type.toUpperCase()
-  type = startCase(type)
+  const Type = startCase(type)
 
   const actions = {
-    [`create${type}`]: (resource) => ({
+    [`create${Type}`]: (resource) => ({
       type: `${TYPE}_CREATE`,
       payload: resource
     }),
 
-    [`request${type}`]: (resource) => {
+    [`request${Type}`]: (resource) => {
       return (dispatch, getState) => {
         const token = getToken(getState())
         if (!token) {
@@ -32,13 +33,13 @@ export const createCollectionActions = (type) => {
           }
         })
 
-        client.find('tenants', (err, resources) => {
+        client.find(type, (err, resources) => {
           if (err) {
             console.error(err)
             return
           }
           resources.forEach((resource) => {
-            dispatch(actions.createTenants(resource.toJSON()))
+            dispatch(actions[`create${Type}`](resource.toJSON()))
           })
         })
       }
@@ -49,7 +50,8 @@ export const createCollectionActions = (type) => {
 }
 
 export const createCollectionReducer = (type) => {
-  type = type.toUpperCase()
+  type = type.toLowerCase()
+  const TYPE = type.toUpperCase()
 
   const initialState = new Map({
     byId: new Map(),
@@ -57,18 +59,18 @@ export const createCollectionReducer = (type) => {
   })
 
   return createReducer(initialState, {
-    [`${type}_CREATE`] (state, { payload }) {
+    [`${TYPE}_CREATE`] (state, { payload }) {
       return new Map({
         byId: state.get('byId').set(payload.id, fromJS(payload)),
         ids: state.get('ids').add(payload.id)
       })
     },
 
-    [`${type}_UPDATE`] (state, { payload }) {
+    [`${TYPE}_UPDATE`] (state, { payload }) {
       return state.mergeIn([ 'byId', payload.id ], fromJS(payload))
     },
 
-    [`${type}_DELETE`] (state, { payload: { id } }) {
+    [`${TYPE}_DELETE`] (state, { payload: { id } }) {
       return new Map({
         byId: state.get('byId').delete(id),
         ids: state.get('ids').delete(id)
@@ -78,9 +80,10 @@ export const createCollectionReducer = (type) => {
 }
 
 export const createCollectionSelectors = (type) => {
-  type = startCase(type)
+  type = type.toLowerCase()
+  const Type = startCase(type)
 
   return {
-    [`get${type}Map`]: (state) => state.getIn([ 'tenants', 'byId' ])
+    [`get${Type}Map`]: (state) => state.getIn([ type, 'byId' ]) || new Map()
   }
 }

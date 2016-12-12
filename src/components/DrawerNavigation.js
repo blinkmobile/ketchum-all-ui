@@ -1,5 +1,6 @@
 import { List, ListItem } from 'material-ui/List'
 import Cloud from 'material-ui/svg-icons/file/cloud'
+import CloudCircle from 'material-ui/svg-icons/file/cloud-circle'
 import Folder from 'material-ui/svg-icons/file/folder'
 import Business from 'material-ui/svg-icons/communication/business'
 import Work from 'material-ui/svg-icons/action/work'
@@ -23,6 +24,9 @@ class DrawerNavigation extends Component {
         </Link>
         <Link to='/tenants' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
           <ListItem primaryText='Tenants' leftIcon={<Business />} />
+        </Link>
+        <Link to='/cloudaccounts' className='DrawerNavLink' activeClassName='DrawerNavLink-active'>
+          <ListItem primaryText='Cloud Accounts' leftIcon={<CloudCircle />} />
         </Link>
       </List>
     )
