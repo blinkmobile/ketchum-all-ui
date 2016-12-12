@@ -1,3 +1,8 @@
-import { createCollectionReducer } from '../helpers/collection.js'
+import {
+  createCollectionReducer, createCollectionSelectors
+} from '../helpers/collection.js'
 
-export default createCollectionReducer('TENANT')
+export default createCollectionReducer('tenants')
+
+const selectors = createCollectionSelectors('tenants')
+export const getTenantsMap = selectors.getTenantsMap

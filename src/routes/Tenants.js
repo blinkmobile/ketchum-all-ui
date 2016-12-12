@@ -1,32 +1,49 @@
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card'
+import { Map } from 'immutable'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import React, { Component } from 'react'
+import {
+  Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn
+} from 'material-ui/Table'
+import React, { Component, PropTypes } from 'react'
+import { connect } from 'react-redux'
 
-import FlexGrid from '../components/FlexGrid.js'
+import { requestTenants } from '../redux/actions/tenants.js'
+import { getTenantsMap } from '../redux/reducers/tenants.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Tenants.css'
 
-import { projects, solutions, tenants } from '../../__tests__/fixtures/data.json'
-
 class Tenants extends Component {
+  componentDidMount () {
+    this.props.requestTenants()
+  }
+
   render () {
+    const { tenantsMap } = this.props
+
     return (
       <RouteSection>
-        <FlexGrid>
-          { tenants.map((tenant) => (
-            <Card key={tenant.id}>
-              <CardHeader title={tenant.name} subtitle={tenant.description} />
-              <CardActions />
-              <CardText>
-                Projects {projects.filter((project) => project.ownerTenant === tenant.id).length}
-                <br />
-                Solutions {solutions.filter((solution) => solution.ownerTenant === tenant.id).length}
-              </CardText>
-            </Card>
-          )) }
-        </FlexGrid>
+        <Table multiSelectable>
+          <TableHeader>
+            <TableRow>
+              <TableHeaderColumn>Name</TableHeaderColumn>
+              <TableHeaderColumn>Label</TableHeaderColumn>
+              <TableHeaderColumn>Note</TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            { Array.from(tenantsMap.values()).map((tenant) => {
+              const { id, label, name, note } = tenant.toJS()
+              return (
+                <TableRow key={id}>
+                  <TableRowColumn>{name}</TableRowColumn>
+                  <TableRowColumn>{label}</TableRowColumn>
+                  <TableRowColumn>{note}</TableRowColumn>
+                </TableRow>
+              )
+            }) }
+          </TableBody>
+        </Table>
         <FloatingActionButton className='TenantAddFAB'>
           <ContentAdd />
         </FloatingActionButton>
@@ -35,4 +52,13 @@ class Tenants extends Component {
   }
 }
 
-export default Tenants
+Tenants.propTypes = {
+  requestTenants: PropTypes.func,
+  tenantsMap: PropTypes.instanceOf(Map)
+}
+
+const mapStateToProps = (state) => ({
+  tenantsMap: getTenantsMap(state)
+})
+const mapDispatchToProps = { requestTenants }
+export default connect(mapStateToProps, mapDispatchToProps)(Tenants)
