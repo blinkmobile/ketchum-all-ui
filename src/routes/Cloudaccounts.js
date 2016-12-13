@@ -6,6 +6,7 @@ import {
 } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router'
 
 import { requestCloudaccounts, selectCloudaccounts } from '../redux/actions/cloudaccounts.js'
 import {
@@ -42,7 +43,9 @@ class Cloudaccounts extends Component {
   }
 
   render () {
-    const { cloudaccountsMap, selectedCloudaccounts, tenantsMap } = this.props
+    const {
+      children, cloudaccountsMap, selectedCloudaccounts, tenantsMap
+    } = this.props
 
     return (
       <RouteSection>
@@ -76,15 +79,22 @@ class Cloudaccounts extends Component {
             }) }
           </TableBody>
         </Table>
-        <FloatingActionButton className='CloudaccountsAddFAB' title='add'>
-          <ContentAdd />
-        </FloatingActionButton>
+
+        <Link to='/cloudaccounts/new'>
+          <FloatingActionButton className='CloudaccountsAddFAB' title='add'>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
+
+        {children}
       </RouteSection>
     )
   }
 }
 
 Cloudaccounts.propTypes = {
+  children: PropTypes.element,
+
   // mapStateToProps
   cloudaccountsMap: PropTypes.instanceOf(Map),
   selectedCloudaccounts: PropTypes.instanceOf(Set),

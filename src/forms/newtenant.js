@@ -1,5 +1,7 @@
 /* @flow */
 
+export const preSubmit = (values) => values
+
 export const validate = (values /* : Object */) => {
   const errors = {}
   if (!values.get('name')) {

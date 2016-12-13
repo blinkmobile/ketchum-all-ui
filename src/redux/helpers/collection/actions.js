@@ -2,8 +2,17 @@
 import startCase from 'lodash.startcase'
 import { push } from 'react-router-redux'
 
+import {
+  preSubmit as preSubmitCloudaccount
+} from '../../../forms/newcloudaccounts.js'
+import { preSubmit as preSubmitTenant } from '../../../forms/newtenant.js'
 import { createClient } from '../../../lib/jsonapi.js'
 import { createCollectionSelectors } from './selectors.js'
+
+const preSubmit = {
+  cloudaccounts: preSubmitCloudaccount,
+  tenants: preSubmitTenant
+}
 
 export const createCollectionActions = (type) => {
   type = type.toLowerCase()
@@ -46,6 +55,7 @@ export const createCollectionActions = (type) => {
     [`create${Type}Submit`]: (values) => {
       return (dispatch, getState) => {
         values = values.toJS ? values.toJS() : values
+        values = preSubmit[type](values)
         dispatch({ type: `CREATE_${TYPE}_SUBMIT` })
 
         const client = createClient(getState())
