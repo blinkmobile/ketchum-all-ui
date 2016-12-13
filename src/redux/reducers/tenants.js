@@ -5,3 +5,4 @@ export default createCollectionReducer('tenants')
 
 const selectors = createCollectionSelectors('tenants')
 export const getTenantsMap = selectors.getTenantsMap
+export const getSelectedTenants = selectors.getSelectedTenants

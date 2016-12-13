@@ -14,6 +14,11 @@ export const createCollectionActions = (type) => {
       payload: resource
     }),
 
+    [`select${Type}`]: (selected) => ({
+      type: `${TYPE}_SELECT`,
+      payload: selected
+    }),
+
     [`request${Type}`]: () => {
       return (dispatch, getState) => {
         dispatch({ type: `REQUEST_${TYPE}` })

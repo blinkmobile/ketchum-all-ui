@@ -1,4 +1,4 @@
-import { Map } from 'immutable'
+import { Map, Set } from 'immutable'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import {
@@ -7,24 +7,46 @@ import {
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { requestCloudaccounts } from '../redux/actions/cloudaccounts.js'
-import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
+import { requestCloudaccounts, selectCloudaccounts } from '../redux/actions/cloudaccounts.js'
+import {
+  getCloudaccountsMap, getSelectedCloudaccounts
+} from '../redux/reducers/cloudaccounts.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Cloudaccounts.css'
 
 class Cloudaccounts extends Component {
+  constructor (props) {
+    super(props)
+
+    this.handleSelect = this.handleSelect.bind(this)
+  }
+
   componentDidMount () {
     this.props.requestCloudaccounts()
   }
 
+  handleSelect (rowsSelected) {
+    const { selectCloudaccounts, cloudaccountsMap } = this.props
+    const rows = Array.from(cloudaccountsMap.values())
+    let selectedCloudaccounts
+    if (rowsSelected === 'all') {
+      selectedCloudaccounts = rows.map((cloudaccount) => cloudaccount.get('id'))
+    } else if (Array.isArray(rowsSelected)) {
+      selectedCloudaccounts = rows
+        .filter((cloudaccount, index) => rowsSelected.includes(index))
+        .map((cloudaccount) => cloudaccount.get('id'))
+    }
+    selectCloudaccounts(selectedCloudaccounts)
+  }
+
   render () {
-    const { cloudaccountsMap, tenantsMap } = this.props
+    const { cloudaccountsMap, selectedCloudaccounts, tenantsMap } = this.props
 
     return (
       <RouteSection>
-        <Table multiSelectable>
+        <Table multiSelectable onRowSelection={this.handleSelect}>
           <TableHeader>
             <TableRow>
               <TableHeaderColumn>AccountID</TableHeaderColumn>
@@ -44,7 +66,7 @@ class Cloudaccounts extends Component {
                 tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
               }
               return (
-                <TableRow key={id}>
+                <TableRow key={id} selected={selectedCloudaccounts.has(id)}>
                   <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
                   <TableRowColumn>{tenantLabel}</TableRowColumn>
                   <TableRowColumn>{tenancy}</TableRowColumn>
@@ -65,15 +87,21 @@ class Cloudaccounts extends Component {
 Cloudaccounts.propTypes = {
   // mapStateToProps
   cloudaccountsMap: PropTypes.instanceOf(Map),
+  selectedCloudaccounts: PropTypes.instanceOf(Set),
   tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
-  requestCloudaccounts: PropTypes.func
+  requestCloudaccounts: PropTypes.func,
+  selectCloudaccounts: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   cloudaccountsMap: getCloudaccountsMap(state),
+  selectedCloudaccounts: getSelectedCloudaccounts(state),
   tenantsMap: getTenantsMap(state)
 })
-const mapDispatchToProps = { requestCloudaccounts }
+const mapDispatchToProps = {
+  requestCloudaccounts,
+  selectCloudaccounts
+}
 export default connect(mapStateToProps, mapDispatchToProps)(Cloudaccounts)

@@ -5,3 +5,4 @@ export default createCollectionReducer('cloudaccounts')
 
 const selectors = createCollectionSelectors('cloudaccounts')
 export const getCloudaccountsMap = selectors.getCloudaccountsMap
+export const getSelectedCloudaccounts = selectors.getSelectedCloudaccounts
