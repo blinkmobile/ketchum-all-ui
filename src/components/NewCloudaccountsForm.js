@@ -1,8 +1,11 @@
+import { Map } from 'immutable'
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
 import ReduxFormTextField from './ReduxFormTextField.js'
+import ReduxFormTenancyField from './ReduxFormTenancyField.js'
 import ReduxFormTenantField from './ReduxFormTenantField.js'
+import ReduxFormVendorField from './ReduxFormVendorField.js'
 import { validate } from '../forms/newcloudaccounts.js'
 
 import './NewCloudaccountsForm.css'
@@ -37,11 +40,10 @@ const fields = [
     type: 'text'
   },
   {
-    component: ReduxFormTextField,
+    component: ReduxFormTenancyField,
     label: 'Tenancy',
     name: 'tenancy',
-    title: '"single" or "multi"',
-    type: 'text'
+    title: 'shared service? or private?'
   },
   {
     component: ReduxFormTenantField,
@@ -50,11 +52,10 @@ const fields = [
     title: 'customer, partner, or other organisation'
   },
   {
-    component: ReduxFormTextField,
+    component: ReduxFormVendorField,
     label: 'Vendor',
     name: 'vendor',
-    title: '"aws"',
-    type: 'text'
+    title: ''
   }
 ]
 
@@ -72,5 +73,8 @@ NewCloudaccountsForm.propTypes = {
 
 export default reduxForm({
   form: 'newcloudaccount',
+  initialValues: new Map({
+    vendor: 'aws'
+  }),
   validate
 })(NewCloudaccountsForm)
