@@ -1,6 +1,6 @@
 /* @flow */
 
-export const validate = (values) => {
+export const validate = (values /* : Object */) => {
   const errors = {}
   if (!values.get('name')) {
     errors.name = 'required'

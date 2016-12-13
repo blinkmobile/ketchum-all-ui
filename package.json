@@ -1,19 +1,9 @@
 {
   "name": "tenants-projects-ui",
   "version": "0.1.0",
-  "private": true,
-  "devDependencies": {
-    "eslint": "^3.10.2",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-config-standard-react": "^4.2.0",
-    "eslint-plugin-node": "^3.0.4",
-    "eslint-plugin-promise": "^3.4.0",
-    "eslint-plugin-react": "^6.7.1",
-    "eslint-plugin-standard": "^2.0.1",
-    "fixpack": "^2.3.1",
-    "flow-bin": "^0.35.0",
-    "jest": "^17.0.3",
-    "react-scripts": "^0.7.0"
+  "author": "Ron Waldon <jokeyrhyme@gmail.com> (https://github.com/jokeyrhyme)",
+  "bugs": {
+    "url": "https://github.com/blinkmobile/ketchum-all-ui/issues"
   },
   "dependencies": {
     "classnames": "^2.2.5",
@@ -37,36 +27,27 @@
     "redux-thunk": "^2.1.0",
     "reselect": "^2.5.4"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "eslint": "eslint --fix --cache .",
-    "flow_check": "flow check",
-    "fixpack": "fixpack",
-    "jest": "jest"
-  },
-  "description": "",
-  "main": "index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/blinkmobile/ketchum-all-ui.git"
-  },
-  "keywords": [],
-  "author": "Ron Waldon <jokeyrhyme@gmail.com> (https://github.com/jokeyrhyme)",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/blinkmobile/ketchum-all-ui/issues"
-  },
-  "homepage": "https://github.com/blinkmobile/ketchum-all-ui#readme",
-  "engines": {
-    "node": ">=7",
-    "npm": ">=4"
+  "devDependencies": {
+    "eslint": "^3.10.2",
+    "eslint-config-standard": "^6.2.1",
+    "eslint-config-standard-react": "^4.2.0",
+    "eslint-plugin-node": "^3.0.4",
+    "eslint-plugin-promise": "^3.4.0",
+    "eslint-plugin-react": "^6.7.1",
+    "eslint-plugin-standard": "^2.0.1",
+    "fixpack": "^2.3.1",
+    "flow-bin": "^0.35.0",
+    "jest": "^17.0.3",
+    "react-scripts": "^0.7.0"
   },
   "directories": {
     "test": "__tests__"
   },
+  "engines": {
+    "node": ">=7",
+    "npm": ">=4"
+  },
+  "homepage": "https://github.com/blinkmobile/ketchum-all-ui#readme",
   "jest": {
     "collectCoverage": true,
     "coverageThreshold": {
@@ -75,5 +56,24 @@
       }
     },
     "testRegex": "/__tests__/[^\\/]*\\.js$"
+  },
+  "keywords": [],
+  "license": "MIT",
+  "main": "index.js",
+  "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blinkmobile/ketchum-all-ui.git"
+  },
+  "scripts": {
+    "build": "react-scripts build",
+    "eject": "react-scripts eject",
+    "eslint": "eslint --fix --cache .",
+    "fixpack": "fixpack",
+    "flow_check": "flow check",
+    "jest": "jest",
+    "posttest": "npm run eslint && npm run flow_check && npm run fixpack",
+    "start": "react-scripts start",
+    "test": "react-scripts test --env=jsdom"
   }
 }

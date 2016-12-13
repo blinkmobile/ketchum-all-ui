@@ -1,7 +1,7 @@
 /* @flow */
 
 export const LOG_IN = 'LOG_IN'
-export const logIn = (token) => ({
+export const logIn = (token /* : string */) => ({
   type: LOG_IN,
   payload: token
 })

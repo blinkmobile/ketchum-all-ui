@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import startCase from 'lodash.startcase'
 import { push } from 'react-router-redux'
 
