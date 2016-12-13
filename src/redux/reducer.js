@@ -1,3 +1,5 @@
+/* @flow */
+
 import { reducer as formReducer } from 'redux-form/immutable'
 import { combineReducers } from 'redux-immutable'
 

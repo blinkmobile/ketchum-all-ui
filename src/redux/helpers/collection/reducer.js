@@ -1,7 +1,9 @@
+/* @flow */
+
 import { fromJS, Map, OrderedSet, Set } from 'immutable'
 import { createReducer } from 'redux-create-reducer'
 
-export const createCollectionReducer = (type) => {
+export const createCollectionReducer = (type /* : string */) => {
   type = type.toLowerCase()
   const TYPE = type.toUpperCase()
 

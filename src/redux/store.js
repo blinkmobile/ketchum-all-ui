@@ -1,3 +1,5 @@
+/* @flow */
+
 import localForage from 'localforage/dist/localforage.nopromises.js'
 import { applyMiddleware, createStore, compose } from 'redux'
 import { autoRehydrate, persistStore } from 'redux-persist-immutable'

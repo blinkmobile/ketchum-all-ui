@@ -1,7 +1,13 @@
+/* @flow */
+
 import { Map, Set } from 'immutable'
 import startCase from 'lodash.startcase'
 
-export const createCollectionSelectors = (type) => {
+/* :: import type { CollectionSelectors } from '../../../../types.js' */
+
+export const createCollectionSelectors = (
+  type /* : string */
+) /* : CollectionSelectors */ => {
   type = type.toLowerCase()
   const Type = startCase(type)
 

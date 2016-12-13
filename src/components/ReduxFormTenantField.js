@@ -1,5 +1,3 @@
-/* @flow */
-
 import { Map } from 'immutable'
 import MenuItem from 'material-ui/MenuItem'
 import React, { PropTypes } from 'react'
@@ -33,7 +31,7 @@ ReduxFormTenantField.propTypes = {
   label: PropTypes.string,
   meta: PropTypes.object,
 
-  // mapStateToProps,
+  // mapStateToProps
   tenantsMap: PropTypes.instanceOf(Map)
 }
 

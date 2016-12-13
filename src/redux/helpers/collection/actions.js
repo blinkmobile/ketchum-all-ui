@@ -1,6 +1,10 @@
 /* eslint-disable no-console */
+/* @flow */
+
 import startCase from 'lodash.startcase'
 import { push } from 'react-router-redux'
+
+/* :: import type { CollectionActions } from '../../../../types.js' */
 
 import {
   preSubmit as preSubmitCloudaccount
@@ -14,7 +18,9 @@ const preSubmit = {
   tenants: preSubmitTenant
 }
 
-export const createCollectionActions = (type) => {
+export const createCollectionActions = (
+  type /* : string */
+) /* : CollectionActions */ => {
   type = type.toLowerCase()
   const TYPE = type.toUpperCase()
   const Type = startCase(type)

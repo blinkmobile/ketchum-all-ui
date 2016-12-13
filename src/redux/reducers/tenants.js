@@ -1,3 +1,5 @@
+/* @flow */
+
 import { createCollectionReducer } from '../helpers/collection/reducer.js'
 import { createCollectionSelectors } from '../helpers/collection/selectors.js'
 

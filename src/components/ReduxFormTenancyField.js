@@ -1,5 +1,3 @@
-/* @flow */
-
 import { Map } from 'immutable'
 import MenuItem from 'material-ui/MenuItem'
 import React, { PropTypes } from 'react'

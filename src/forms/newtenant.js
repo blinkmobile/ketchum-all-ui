@@ -1,6 +1,6 @@
 /* @flow */
 
-export const preSubmit = (values) => values
+export const preSubmit = (values /* : Object */) /* : Object */ => values
 
 export const validate = (values /* : Object */) => {
   const errors = {}

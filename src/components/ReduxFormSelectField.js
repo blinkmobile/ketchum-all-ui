@@ -1,5 +1,3 @@
-/* @flow */
-
 import SelectField from 'material-ui/SelectField'
 import React, { PropTypes } from 'react'
 

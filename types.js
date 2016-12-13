@@ -14,4 +14,8 @@ export type CollectionReducerState = Map<string, CollectionIdMap | CollectionIds
 
 export type ReducerState = Map<string, any>
 export type RootState = Map<string, ReducerState | CollectionReducerState>
+
+type Selector = (state: RootState) => any
+export type CollectionActions = { [id:string]: Function }
+export type CollectionSelectors = { [id:string]: Selector }
 */

@@ -5,7 +5,7 @@ import { getTenantsMap } from '../redux/reducers/tenants.js'
 
 import { TENANCY_VALUES, VENDOR_VALUES } from '../lib/values.js'
 
-export const preSubmit = (values) => Object.assign({}, values, {
+export const preSubmit = (values /* : Object */) /* : Object */ => Object.assign({}, values, {
   tenant: { id: values.tenant, type: 'tenants' }
 })
 
