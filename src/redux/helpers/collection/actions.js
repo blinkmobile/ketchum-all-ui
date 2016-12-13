@@ -86,7 +86,6 @@ export const createCollectionActions = (type) => {
         dispatch({ type: `DELETE_${TYPE}_SUBMIT` })
 
         const client = createClient(getState())
-        console.log(`delete${Type}Submit()`, type, id)
         return client.get(type, id)
           .then((resource) => {
             // hack around a weird bug

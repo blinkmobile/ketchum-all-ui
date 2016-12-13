@@ -1,3 +1,4 @@
+import { Map } from 'immutable'
 import Dialog from 'material-ui/Dialog'
 import FlatButton from 'material-ui/FlatButton'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -7,6 +8,7 @@ import { getFormValues } from 'redux-form/immutable'
 
 import NewTenantForm from '../components/NewTenantForm.js'
 import { createTenantsSubmit } from '../redux/actions/tenants.js'
+import { validate } from '../forms/newtenant.js'
 
 import './TenantsNew.css'
 
@@ -26,7 +28,10 @@ class TenantsNew extends Component {
     event.preventDefault()
 
     const { createTenantsSubmit } = this.props
-    return createTenantsSubmit(this.props.newtenant.toJS())
+    const values = this.props.newtenant || new Map()
+    if (!Object.keys(validate(values)).length) {
+      return createTenantsSubmit(values.toJS())
+    }
   }
 
   render () {
@@ -35,6 +40,7 @@ class TenantsNew extends Component {
         <FlatButton label='Cancel' onClick={this.handleClose} />,
         <RaisedButton label='Create' primary onClick={this.handleSubmit} />
       ],
+      autoScrollBodyContent: true,
       onRequestClose: this.handleClose,
       open: true,
       title: 'New Tenant'
