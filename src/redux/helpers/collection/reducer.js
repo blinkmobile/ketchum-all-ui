@@ -23,10 +23,11 @@ export const createCollectionReducer = (type) => {
       return state.mergeIn([ 'byId', payload.id ], fromJS(payload))
     },
 
-    [`${TYPE}_DELETE`] (state, { payload: { id } }) {
+    [`${TYPE}_DELETE`] (state, { payload: id }) {
       return state.merge({
         byId: state.get('byId').delete(id),
-        ids: state.get('ids').delete(id)
+        ids: state.get('ids').delete(id),
+        selected: state.get('selected').delete(id)
       })
     },
 

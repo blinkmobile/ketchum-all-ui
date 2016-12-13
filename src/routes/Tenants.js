@@ -1,4 +1,5 @@
 import { Map, Set } from 'immutable'
+import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import {
@@ -8,7 +9,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import { requestTenants, selectTenants } from '../redux/actions/tenants.js'
+import {
+  deleteSelectedTenants, requestTenants, selectTenants
+} from '../redux/actions/tenants.js'
 import { getSelectedTenants, getTenantsMap } from '../redux/reducers/tenants.js'
 import RouteSection from '../components/RouteSection.js'
 
@@ -41,7 +44,9 @@ class Tenants extends Component {
   }
 
   render () {
-    const { children, selectedTenants, tenantsMap } = this.props
+    const {
+      children, deleteSelectedTenants, selectedTenants, tenantsMap
+    } = this.props
 
     return (
       <RouteSection>
@@ -52,7 +57,7 @@ class Tenants extends Component {
               <TableHeaderColumn>Note</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody deselectOnClickaway={false}>
             { Array.from(tenantsMap.values()).map((tenant) => {
               const { id, label, name, note } = tenant.toJS()
               return (
@@ -64,11 +69,16 @@ class Tenants extends Component {
             }) }
           </TableBody>
         </Table>
+
         <Link to='/tenants/new'>
-          <FloatingActionButton className='TenantAddFAB'>
+          <FloatingActionButton className='TenantAddFAB' title='add'>
             <ContentAdd />
           </FloatingActionButton>
         </Link>
+
+        <FloatingActionButton className='TenantsDeleteFAB' secondary title='delete' onClick={deleteSelectedTenants}>
+          <ActionDelete />
+        </FloatingActionButton>
 
         {children}
       </RouteSection>
@@ -84,6 +94,7 @@ Tenants.propTypes = {
   selectedTenants: PropTypes.instanceOf(Set),
 
   // mapDispatchToProps
+  deleteSelectedTenants: PropTypes.func,
   requestTenants: PropTypes.func,
   selectTenants: PropTypes.func
 }
@@ -93,6 +104,7 @@ const mapStateToProps = (state) => ({
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
+  deleteSelectedTenants,
   requestTenants,
   selectTenants
 }

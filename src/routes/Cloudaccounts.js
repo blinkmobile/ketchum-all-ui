@@ -76,7 +76,7 @@ class Cloudaccounts extends Component {
             }) }
           </TableBody>
         </Table>
-        <FloatingActionButton className='CloudaccountsAddFAB'>
+        <FloatingActionButton className='CloudaccountsAddFAB' title='add'>
           <ContentAdd />
         </FloatingActionButton>
       </RouteSection>

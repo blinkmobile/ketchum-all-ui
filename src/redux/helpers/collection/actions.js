@@ -2,6 +2,7 @@ import startCase from 'lodash.startcase'
 import { push } from 'react-router-redux'
 
 import { createClient } from '../../../lib/jsonapi.js'
+import { createCollectionSelectors } from './selectors.js'
 
 export const createCollectionActions = (type) => {
   type = type.toLowerCase()
@@ -12,6 +13,11 @@ export const createCollectionActions = (type) => {
     [`create${Type}`]: (resource) => ({
       type: `${TYPE}_CREATE`,
       payload: resource
+    }),
+
+    [`delete${Type}`]: (id) => ({
+      type: `${TYPE}_DELETE`,
+      payload: id
     }),
 
     [`select${Type}`]: (selected) => ({
@@ -43,14 +49,14 @@ export const createCollectionActions = (type) => {
 
         const client = createClient(getState())
         const resource = client.create(type, values)
-        resource.sync((err, resource) => {
-          if (err) {
+        return resource.sync()
+          .then((resource) => {
+            dispatch(actions[`create${Type}Success`](resource.toJSON()))
+          })
+          .catch((err) => {
             console.error(err)
             dispatch(actions[`create${Type}Error`])
-            return
-          }
-          dispatch(actions[`create${Type}Success`](resource.toJSON()))
-        })
+          })
       }
     },
 
@@ -62,7 +68,47 @@ export const createCollectionActions = (type) => {
       }
     },
 
-    [`create${Type}Error`]: () => ({ type: `CREATE_${TYPE}_ERROR` })
+    [`create${Type}Error`]: () => ({ type: `DELETE_${TYPE}_ERROR` }),
+
+    [`deleteSelected${Type}`]: () => {
+      return (dispatch, getState) => {
+        const selectors = createCollectionSelectors(type)
+        const selectedIds = selectors[`getSelected${Type}`](getState())
+        selectedIds.forEach((id) => {
+          dispatch(actions[`delete${Type}Submit`](id))
+        })
+      }
+    },
+
+    [`delete${Type}Submit`]: (id) => {
+      return (dispatch, getState) => {
+        dispatch({ type: `DELETE_${TYPE}_SUBMIT` })
+
+        const client = createClient(getState())
+        console.log(`delete${Type}Submit()`, type, id)
+        return client.get(type, id)
+          .then((resource) => {
+            // hack around a weird bug
+            Object.assign(resource._base, { id, type }, resource._base)
+            return resource
+          })
+          .then((resource) => resource.delete())
+          .then(() => dispatch(actions[`delete${Type}Success`](id)))
+          .catch((err) => {
+            console.error(err)
+            dispatch(actions[`delete${Type}Error`])
+          })
+      }
+    },
+
+    [`delete${Type}Success`]: (id) => {
+      return (dispatch, getState) => {
+        dispatch({ type: `DELETE_${TYPE}_SUCCESS` })
+        dispatch(actions[`delete${Type}`](id))
+      }
+    },
+
+    [`delete${Type}Error`]: () => ({ type: `DELETE_${TYPE}_ERROR` })
   }
 
   return actions
