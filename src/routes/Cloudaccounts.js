@@ -1,4 +1,5 @@
 import { Map, Set } from 'immutable'
+import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import {
@@ -8,7 +9,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
-import { requestCloudaccounts, selectCloudaccounts } from '../redux/actions/cloudaccounts.js'
+import {
+  deleteSelectedCloudaccounts, requestCloudaccounts, selectCloudaccounts
+} from '../redux/actions/cloudaccounts.js'
 import {
   getCloudaccountsMap, getSelectedCloudaccounts
 } from '../redux/reducers/cloudaccounts.js'
@@ -44,7 +47,7 @@ class Cloudaccounts extends Component {
 
   render () {
     const {
-      children, cloudaccountsMap, selectedCloudaccounts, tenantsMap
+      children, cloudaccountsMap, deleteSelectedCloudaccounts, selectedCloudaccounts, tenantsMap
     } = this.props
 
     return (
@@ -58,7 +61,7 @@ class Cloudaccounts extends Component {
               <TableHeaderColumn>Note</TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody>
+          <TableBody deselectOnClickaway={false}>
             { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
               const {
                 accountId, id, name, note, tenancy, vendor,
@@ -86,6 +89,10 @@ class Cloudaccounts extends Component {
           </FloatingActionButton>
         </Link>
 
+        <FloatingActionButton className='CloudaccountsDeleteFAB' secondary title='delete' onClick={deleteSelectedCloudaccounts}>
+          <ActionDelete />
+        </FloatingActionButton>
+
         {children}
       </RouteSection>
     )
@@ -101,6 +108,7 @@ Cloudaccounts.propTypes = {
   tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
+  deleteSelectedCloudaccounts: PropTypes.func,
   requestCloudaccounts: PropTypes.func,
   selectCloudaccounts: PropTypes.func
 }
@@ -111,6 +119,7 @@ const mapStateToProps = (state) => ({
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
+  deleteSelectedCloudaccounts,
   requestCloudaccounts,
   selectCloudaccounts
 }
