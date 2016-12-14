@@ -1,5 +1,11 @@
-.ServiceAddFAB {
+.ServicesAddFAB {
   position: fixed;
-  bottom: 2em;
-  right: 2em;
+  bottom: 1em;
+  right: 1em;
+}
+
+.ServicesDeleteFAB {
+  position: fixed;
+  bottom: 5em;
+  right: 1em;
 }
