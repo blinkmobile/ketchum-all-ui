@@ -9,12 +9,14 @@ import { push } from 'react-router-redux'
 import {
   preSubmit as preSubmitCloudaccount
 } from '../../../forms/newcloudaccount.js'
+import { preSubmit as preSubmitProject } from '../../../forms/newproject.js'
 import { preSubmit as preSubmitTenant } from '../../../forms/newtenant.js'
 import { createClient } from '../../../lib/jsonapi.js'
 import { createCollectionSelectors } from './selectors.js'
 
 const preSubmit = {
   cloudaccounts: preSubmitCloudaccount,
+  projects: preSubmitProject,
   tenants: preSubmitTenant
 }
 

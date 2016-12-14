@@ -1,6 +1,11 @@
+import { Map } from 'immutable'
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
+import ServiceTypeField from './fields/ServiceTypeField.js'
+import ServiceRelation from './fields/ServiceRelation.js'
+import TenantRelation from './fields/TenantRelation.js'
+import PartnersRelation from './fields/PartnersRelation.js'
 import ReduxFormTextField from './ReduxFormTextField.js'
 import { validate } from '../forms/newproject.js'
 
@@ -22,6 +27,19 @@ const fields = [
     type: 'text'
   },
   {
+    component: ServiceTypeField,
+    label: 'Service Type',
+    name: 'serviceType',
+    title: ''
+  },
+  {
+    component: ReduxFormTextField,
+    label: 'URL',
+    name: 'url',
+    title: '',
+    type: 'url'
+  },
+  {
     component: ReduxFormTextField,
     label: 'Note',
     name: 'note',
@@ -32,9 +50,12 @@ const fields = [
 
 const NewProjectForm = ({ onSubmit }) => (
   <form onSubmit={onSubmit}>
+    <TenantRelation name='customer' label='Customer' />
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
     )) }
+    <ServiceRelation name='service' label='Service' />
+    <PartnersRelation name='partners' label='Partners' />
   </form>
 )
 
@@ -44,5 +65,8 @@ NewProjectForm.propTypes = {
 
 export default reduxForm({
   form: 'newproject',
+  initialValues: new Map({
+    serviceType: 'api'
+  }),
   validate
 })(NewProjectForm)
