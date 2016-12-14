@@ -66,7 +66,7 @@ class Services extends Component {
             }
             return (
               <TableRow key={id} selected={selectedServices.has(id)}>
-                <TableRowColumn title={name}>{label}</TableRowColumn>
+                <TableRowColumn title={name}>{label || name}</TableRowColumn>
                 <TableRowColumn>{serviceType}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
                 <TableRowColumn>{tenancy}</TableRowColumn>

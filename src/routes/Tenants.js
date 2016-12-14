@@ -57,7 +57,7 @@ class Tenants extends Component {
             const { id, label, name, note } = tenant.toJS()
             return (
               <TableRow key={id} selected={selectedTenants.has(id)}>
-                <TableRowColumn title={name}>{label}</TableRowColumn>
+                <TableRowColumn title={name}>{label || name}</TableRowColumn>
                 <TableRowColumn>{note}</TableRowColumn>
               </TableRow>
             )
