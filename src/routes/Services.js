@@ -5,7 +5,7 @@ import FloatingActionButton from 'material-ui/FloatingActionButton'
 import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router'
+import { Link } from 'react-router'
 
 import {
   resourceMapToArray, rowIndicesToResourceIds
@@ -75,11 +75,11 @@ class Services extends Component {
           }) }
         </ResourceTable>
 
-        {/* <Link to='/services/new'> */}
-        <FloatingActionButton className='ServicesAddFAB' title='add'>
-          <ContentAdd />
-        </FloatingActionButton>
-        {/* </Link> */}
+        <Link to='/services/new'>
+          <FloatingActionButton className='ServicesAddFAB' title='add'>
+            <ContentAdd />
+          </FloatingActionButton>
+        </Link>
 
         <FloatingActionButton className='ServicesDeleteFAB' secondary title='delete' onClick={deleteSelectedServices}>
           <ActionDelete />
