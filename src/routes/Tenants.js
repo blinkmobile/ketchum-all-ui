@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import {
+  resourceMapToArray, rowIndicesToResourceIds
+} from '../lib/rows.js'
+import {
   deleteSelectedTenants, requestTenants, selectTenants
 } from '../redux/actions/tenants.js'
 import { getSelectedTenants, getTenantsMap } from '../redux/reducers/tenants.js'
@@ -30,15 +33,10 @@ class Tenants extends Component {
 
   handleSelect (rowsSelected) {
     const { selectTenants, tenantsMap } = this.props
-    const rows = Array.from(tenantsMap.values())
-    let selectedTenants
-    if (rowsSelected === 'all') {
-      selectedTenants = rows.map((tenant) => tenant.get('id'))
-    } else if (Array.isArray(rowsSelected)) {
-      selectedTenants = rows
-        .filter((tenant, index) => rowsSelected.includes(index))
-        .map((tenant) => tenant.get('id'))
-    }
+    const selectedTenants = rowIndicesToResourceIds(
+      tenantsMap,
+      rowsSelected
+    )
     selectTenants(selectedTenants)
   }
 
@@ -55,7 +53,7 @@ class Tenants extends Component {
     return (
       <RouteSection>
         <ResourceTable {...tableProps}>
-          { Array.from(tenantsMap.values()).map((tenant) => {
+          { resourceMapToArray(tenantsMap).map((tenant) => {
             const { id, label, name, note } = tenant.toJS()
             return (
               <TableRow key={id} selected={selectedTenants.has(id)}>

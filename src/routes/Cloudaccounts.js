@@ -8,6 +8,9 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router'
 
 import {
+  resourceMapToArray, rowIndicesToResourceIds
+} from '../lib/rows.js'
+import {
   deleteSelectedCloudaccounts, requestCloudaccounts, selectCloudaccounts
 } from '../redux/actions/cloudaccounts.js'
 import {
@@ -32,15 +35,10 @@ class Cloudaccounts extends Component {
 
   handleSelect (rowsSelected) {
     const { selectCloudaccounts, cloudaccountsMap } = this.props
-    const rows = Array.from(cloudaccountsMap.values())
-    let selectedCloudaccounts
-    if (rowsSelected === 'all') {
-      selectedCloudaccounts = rows.map((cloudaccount) => cloudaccount.get('id'))
-    } else if (Array.isArray(rowsSelected)) {
-      selectedCloudaccounts = rows
-        .filter((cloudaccount, index) => rowsSelected.includes(index))
-        .map((cloudaccount) => cloudaccount.get('id'))
-    }
+    const selectedCloudaccounts = rowIndicesToResourceIds(
+      cloudaccountsMap,
+      rowsSelected
+    )
     selectCloudaccounts(selectedCloudaccounts)
   }
 
@@ -57,7 +55,7 @@ class Cloudaccounts extends Component {
     return (
       <RouteSection>
         <ResourceTable {...tableProps}>
-          { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
+          { resourceMapToArray(cloudaccountsMap).map((cloudaccount) => {
             const {
               accountId, id, name, note, tenancy, vendor,
               tenant: relatedTenant
