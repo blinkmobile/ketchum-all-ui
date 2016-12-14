@@ -2,9 +2,7 @@ import { Map, Set } from 'immutable'
 import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import {
-  Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn
-} from 'material-ui/Table'
+import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -16,6 +14,7 @@ import {
   getCloudaccountsMap, getSelectedCloudaccounts
 } from '../redux/reducers/cloudaccounts.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
+import ResourceTable from '../components/ResourceTable.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Cloudaccounts.css'
@@ -50,38 +49,33 @@ class Cloudaccounts extends Component {
       children, cloudaccountsMap, deleteSelectedCloudaccounts, selectedCloudaccounts, tenantsMap
     } = this.props
 
+    const tableProps = {
+      headings: [ 'AccountID', 'Tenant', 'Tenancy', 'Note' ],
+      onSelect: this.handleSelect
+    }
+
     return (
       <RouteSection>
-        <Table multiSelectable onRowSelection={this.handleSelect}>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>AccountID</TableHeaderColumn>
-              <TableHeaderColumn>Tenant</TableHeaderColumn>
-              <TableHeaderColumn>Tenancy</TableHeaderColumn>
-              <TableHeaderColumn>Note</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody deselectOnClickaway={false}>
-            { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
-              const {
-                accountId, id, name, note, tenancy, vendor,
-                tenant: relatedTenant
-              } = cloudaccount.toJS()
-              let tenantLabel = ''
-              if (relatedTenant && tenantsMap.has(relatedTenant.id)) {
-                tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
-              }
-              return (
-                <TableRow key={id} selected={selectedCloudaccounts.has(id)}>
-                  <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
-                  <TableRowColumn>{tenantLabel}</TableRowColumn>
-                  <TableRowColumn>{tenancy}</TableRowColumn>
-                  <TableRowColumn>{note}</TableRowColumn>
-                </TableRow>
-              )
-            }) }
-          </TableBody>
-        </Table>
+        <ResourceTable {...tableProps}>
+          { Array.from(cloudaccountsMap.values()).map((cloudaccount) => {
+            const {
+              accountId, id, name, note, tenancy, vendor,
+              tenant: relatedTenant
+            } = cloudaccount.toJS()
+            let tenantLabel = ''
+            if (relatedTenant && tenantsMap.has(relatedTenant.id)) {
+              tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
+            }
+            return (
+              <TableRow key={id} selected={selectedCloudaccounts.has(id)}>
+                <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
+                <TableRowColumn>{tenantLabel}</TableRowColumn>
+                <TableRowColumn>{tenancy}</TableRowColumn>
+                <TableRowColumn>{note}</TableRowColumn>
+              </TableRow>
+            )
+          }) }
+        </ResourceTable>
 
         <Link to='/cloudaccounts/new'>
           <FloatingActionButton className='CloudaccountsAddFAB' title='add'>

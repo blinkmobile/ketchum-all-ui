@@ -2,9 +2,7 @@ import { Map, Set } from 'immutable'
 import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
-import {
-  Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn
-} from 'material-ui/Table'
+import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
@@ -13,6 +11,7 @@ import {
   deleteSelectedTenants, requestTenants, selectTenants
 } from '../redux/actions/tenants.js'
 import { getSelectedTenants, getTenantsMap } from '../redux/reducers/tenants.js'
+import ResourceTable from '../components/ResourceTable.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Tenants.css'
@@ -48,27 +47,24 @@ class Tenants extends Component {
       children, deleteSelectedTenants, selectedTenants, tenantsMap
     } = this.props
 
+    const tableProps = {
+      headings: [ 'Label', 'Note' ],
+      onSelect: this.handleSelect
+    }
+
     return (
       <RouteSection>
-        <Table multiSelectable onRowSelection={this.handleSelect}>
-          <TableHeader>
-            <TableRow>
-              <TableHeaderColumn>Label</TableHeaderColumn>
-              <TableHeaderColumn>Note</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody deselectOnClickaway={false}>
-            { Array.from(tenantsMap.values()).map((tenant) => {
-              const { id, label, name, note } = tenant.toJS()
-              return (
-                <TableRow key={id} selected={selectedTenants.has(id)}>
-                  <TableRowColumn title={name}>{label}</TableRowColumn>
-                  <TableRowColumn>{note}</TableRowColumn>
-                </TableRow>
-              )
-            }) }
-          </TableBody>
-        </Table>
+        <ResourceTable {...tableProps}>
+          { Array.from(tenantsMap.values()).map((tenant) => {
+            const { id, label, name, note } = tenant.toJS()
+            return (
+              <TableRow key={id} selected={selectedTenants.has(id)}>
+                <TableRowColumn title={name}>{label}</TableRowColumn>
+                <TableRowColumn>{note}</TableRowColumn>
+              </TableRow>
+            )
+          }) }
+        </ResourceTable>
 
         <Link to='/tenants/new'>
           <FloatingActionButton className='TenantAddFAB' title='add'>
