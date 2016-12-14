@@ -60,6 +60,7 @@ export const validate = (values /* : Object */) => {
       if (!getTenantsMap(store.getState()).has(partner.get('id'))) {
         return 'refers to missing / non-existant partner'
       }
+      return null
     })
     .filter((error) => !!error)
 

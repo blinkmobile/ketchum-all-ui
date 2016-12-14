@@ -1,3 +1,4 @@
+import { Map } from 'immutable'
 import FlatButton from 'material-ui/FlatButton'
 import React, { PropTypes } from 'react'
 import { Field, FieldArray } from 'redux-form/immutable'
@@ -17,7 +18,7 @@ const RelatedPartners = ({ fields, meta: { touched, error } }) => (
       </li>
     )) }
     <li>
-      <FlatButton label='Add Partner' primary onClick={() => fields.push({})} />
+      <FlatButton label='Add Partner' primary onClick={() => fields.push(new Map())} />
       {touched && error && <span>{error}</span>}
     </li>
   </ul>
