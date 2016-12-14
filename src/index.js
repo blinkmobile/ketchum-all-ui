@@ -13,6 +13,7 @@ import Login from './routes/Login.js'
 import Cloudaccounts from './routes/Cloudaccounts.js'
 import CloudaccountsNew from './routes/CloudaccountsNew.js'
 import Projects from './routes/Projects.js'
+import ProjectsNew from './routes/ProjectsNew.js'
 import Services from './routes/Services.js'
 import Tenants from './routes/Tenants.js'
 import TenantsNew from './routes/TenantsNew.js'
@@ -32,7 +33,9 @@ ReactDOM.render(
             <Route path='new' component={CloudaccountsNew} />
           </Route>
           <Route path='login' component={Login} />
-          <Route path='projects' component={Projects} />
+          <Route path='projects' component={Projects}>
+            <Route path='new' component={ProjectsNew} />
+          </Route>
           <Route path='services' component={Services} />
           <Route path='tenants' component={Tenants}>
             <Route path='new' component={TenantsNew} />

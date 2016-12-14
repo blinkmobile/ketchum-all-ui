@@ -6,13 +6,13 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form/immutable'
 
-import NewCloudaccountForm from '../components/NewCloudaccountForm.js'
-import { createCloudaccountsSubmit } from '../redux/actions/cloudaccounts.js'
-import { validate } from '../forms/newcloudaccount.js'
+import NewProjectForm from '../components/NewProjectForm.js'
+import { createProjectsSubmit } from '../redux/actions/projects.js'
+import { validate } from '../forms/newproject.js'
 
-import './CloudaccountsNew.css'
+import './ProjectsNew.css'
 
-class CloudaccountsNew extends Component {
+class ProjectsNew extends Component {
   constructor (props) {
     super(props)
 
@@ -27,10 +27,10 @@ class CloudaccountsNew extends Component {
   handleSubmit (event) {
     event.preventDefault()
 
-    const { createCloudaccountsSubmit } = this.props
-    const values = this.props.newcloudaccount || new Map()
+    const { createProjectsSubmit } = this.props
+    const values = this.props.newproject || new Map()
     if (!Object.keys(validate(values)).length) {
-      return createCloudaccountsSubmit(values.toJS())
+      return createProjectsSubmit(values.toJS())
     }
   }
 
@@ -43,32 +43,32 @@ class CloudaccountsNew extends Component {
       autoScrollBodyContent: true,
       onRequestClose: this.handleClose,
       open: true,
-      title: 'New Cloud Account'
+      title: 'New Project'
     }
 
     return (
       <Dialog {...dialogProps}>
-        <NewCloudaccountForm onSubmit={this.handleSubmit} />
+        <NewProjectForm onSubmit={this.handleSubmit} />
       </Dialog>
     )
   }
 }
 
-CloudaccountsNew.propTypes = {
+ProjectsNew.propTypes = {
   // mapStateToProps
-  newcloudaccount: PropTypes.object,
+  newproject: PropTypes.object,
 
   // mapDispatchToProps
-  createCloudaccountsSubmit: PropTypes.func,
+  createProjectsSubmit: PropTypes.func,
 
   // react-router
   router: PropTypes.object
 }
 
 const mapStateToProps = (state) => ({
-  newcloudaccount: getFormValues('newcloudaccount')(state)
+  newproject: getFormValues('newproject')(state)
 })
 const mapDispatchToProps = {
-  createCloudaccountsSubmit
+  createProjectsSubmit
 }
-export default connect(mapStateToProps, mapDispatchToProps)(CloudaccountsNew)
+export default connect(mapStateToProps, mapDispatchToProps)(ProjectsNew)

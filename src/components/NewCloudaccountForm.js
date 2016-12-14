@@ -6,9 +6,9 @@ import ReduxFormTextField from './ReduxFormTextField.js'
 import ReduxFormTenancyField from './ReduxFormTenancyField.js'
 import ReduxFormTenantField from './ReduxFormTenantField.js'
 import ReduxFormVendorField from './ReduxFormVendorField.js'
-import { validate } from '../forms/newcloudaccounts.js'
+import { validate } from '../forms/newcloudaccount.js'
 
-import './NewCloudaccountsForm.css'
+import './NewCloudaccountForm.css'
 
 const fields = [
   {
@@ -59,7 +59,7 @@ const fields = [
   }
 ]
 
-const NewCloudaccountsForm = ({ onSubmit }) => (
+const NewCloudaccountForm = ({ onSubmit }) => (
   <form onSubmit={onSubmit}>
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
@@ -67,7 +67,7 @@ const NewCloudaccountsForm = ({ onSubmit }) => (
   </form>
 )
 
-NewCloudaccountsForm.propTypes = {
+NewCloudaccountForm.propTypes = {
   onSubmit: PropTypes.func
 }
 
@@ -77,4 +77,4 @@ export default reduxForm({
     vendor: 'aws'
   }),
   validate
-})(NewCloudaccountsForm)
+})(NewCloudaccountForm)

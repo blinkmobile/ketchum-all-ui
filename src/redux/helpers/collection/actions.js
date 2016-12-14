@@ -8,7 +8,7 @@ import { push } from 'react-router-redux'
 
 import {
   preSubmit as preSubmitCloudaccount
-} from '../../../forms/newcloudaccounts.js'
+} from '../../../forms/newcloudaccount.js'
 import { preSubmit as preSubmitTenant } from '../../../forms/newtenant.js'
 import { createClient } from '../../../lib/jsonapi.js'
 import { createCollectionSelectors } from './selectors.js'
