@@ -48,7 +48,7 @@ class Projects extends Component {
     } = this.props
 
     const tableProps = {
-      headings: [ 'Label', 'Type', 'Tenant', 'Tenancy', 'Note' ],
+      headings: [ 'Label', 'Type', 'Tenant', 'URL' ],
       onSelect: this.handleSelect
     }
 
@@ -57,8 +57,8 @@ class Projects extends Component {
         <ResourceTable {...tableProps}>
           { resourceMapToArray(projectsMap).map((project) => {
             const {
-              id, label, name, note, projectType, tenancy,
-              tenant: relatedTenant
+              id, label, name, serviceType, url,
+              customer: relatedTenant
             } = project.toJS()
             let tenantLabel = ''
             if (relatedTenant && tenantsMap.has(relatedTenant.id)) {
@@ -67,10 +67,9 @@ class Projects extends Component {
             return (
               <TableRow key={id} selected={selectedProjects.has(id)}>
                 <TableRowColumn title={name}>{label || name}</TableRowColumn>
-                <TableRowColumn>{projectType}</TableRowColumn>
+                <TableRowColumn>{serviceType}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
-                <TableRowColumn>{tenancy}</TableRowColumn>
-                <TableRowColumn>{note}</TableRowColumn>
+                <TableRowColumn title={url}>{url}</TableRowColumn>
               </TableRow>
             )
           }) }
