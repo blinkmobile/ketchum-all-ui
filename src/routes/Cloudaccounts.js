@@ -48,7 +48,7 @@ class Cloudaccounts extends Component {
     } = this.props
 
     const tableProps = {
-      headings: [ 'AccountID', 'Tenant', 'Tenancy', 'Note' ],
+      headings: [ 'AccountID', 'Tenant', 'Tenancy' ],
       onSelect: this.handleSelect
     }
 
@@ -57,7 +57,7 @@ class Cloudaccounts extends Component {
         <ResourceTable {...tableProps}>
           { resourceMapToArray(cloudaccountsMap).map((cloudaccount) => {
             const {
-              accountId, id, name, note, tenancy, vendor,
+              accountId, id, name, tenancy, vendor,
               tenant: relatedTenant
             } = cloudaccount.toJS()
             let tenantLabel = ''
@@ -69,7 +69,6 @@ class Cloudaccounts extends Component {
                 <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
                 <TableRowColumn>{tenancy}</TableRowColumn>
-                <TableRowColumn>{note}</TableRowColumn>
               </TableRow>
             )
           }) }

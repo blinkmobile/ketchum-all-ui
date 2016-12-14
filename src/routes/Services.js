@@ -48,7 +48,7 @@ class Services extends Component {
     } = this.props
 
     const tableProps = {
-      headings: [ 'Label', 'Type', 'Tenant', 'Tenancy', 'Note' ],
+      headings: [ 'Label', 'Type', 'Tenant', 'Tenancy' ],
       onSelect: this.handleSelect
     }
 
@@ -57,7 +57,7 @@ class Services extends Component {
         <ResourceTable {...tableProps}>
           { resourceMapToArray(servicesMap).map((service) => {
             const {
-              id, label, name, note, serviceType, tenancy,
+              id, label, name, serviceType, tenancy,
               tenant: relatedTenant
             } = service.toJS()
             let tenantLabel = ''
@@ -70,7 +70,6 @@ class Services extends Component {
                 <TableRowColumn>{serviceType}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
                 <TableRowColumn>{tenancy}</TableRowColumn>
-                <TableRowColumn>{note}</TableRowColumn>
               </TableRow>
             )
           }) }
