@@ -1,11 +1,11 @@
-import TextField from 'material-ui/TextField'
+import MUITextField from 'material-ui/TextField'
 import React, { PropTypes } from 'react'
 
-import './ReduxFormTextField.css'
+import './TextField.css'
 
-export const ReduxFormTextField = ({ input, label, type, meta: { touched, error } }) => {
+export const TextField = ({ input, label, type, meta: { touched, error } }) => {
   const fieldProps = {
-    className: `ReduxFormTextField-${input.name}`,
+    className: `TextField-${input.name}`,
     errorText: touched && error,
     floatingLabelText: label,
     multiLine: type === 'textarea',
@@ -15,15 +15,15 @@ export const ReduxFormTextField = ({ input, label, type, meta: { touched, error 
     type = undefined
   }
   return (
-    <TextField {...input} {...fieldProps} type={type} value={input.value} />
+    <MUITextField {...input} {...fieldProps} type={type} value={input.value} />
   )
 }
 
-ReduxFormTextField.propTypes = {
+TextField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   type: PropTypes.string,
   meta: PropTypes.object
 }
 
-export default ReduxFormTextField
+export default TextField

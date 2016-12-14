@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form/immutable'
 
-import NewProjectForm from '../components/NewProjectForm.js'
+import NewProject from '../components/forms/NewProject.js'
 import { createProjectsSubmit } from '../redux/actions/projects.js'
 import { validate } from '../forms/newproject.js'
 
@@ -48,7 +48,7 @@ class ProjectsNew extends Component {
 
     return (
       <Dialog {...dialogProps}>
-        <NewProjectForm onSubmit={this.handleSubmit} />
+        <NewProject onSubmit={this.handleSubmit} />
       </Dialog>
     )
   }

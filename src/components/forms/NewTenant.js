@@ -1,28 +1,28 @@
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
-import ReduxFormTextField from './ReduxFormTextField.js'
-import { validate } from '../forms/newtenant.js'
+import TextField from '../fields/TextField.js'
+import { validate } from '../../forms/newtenant.js'
 
-import './NewTenantForm.css'
+import './NewTenant.css'
 
 const fields = [
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Name',
     name: 'name',
     title: 'short-unique-lower-case',
     type: 'text'
   },
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Label',
     name: 'label',
     title: 'Organisation Name',
     type: 'text'
   },
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Note',
     name: 'note',
     title: 'other details...',
@@ -30,7 +30,7 @@ const fields = [
   }
 ]
 
-const NewTenantForm = ({ onSubmit }) => (
+const NewTenant = ({ onSubmit }) => (
   <form onSubmit={onSubmit}>
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
@@ -38,11 +38,11 @@ const NewTenantForm = ({ onSubmit }) => (
   </form>
 )
 
-NewTenantForm.propTypes = {
+NewTenant.propTypes = {
   onSubmit: PropTypes.func
 }
 
 export default reduxForm({
   form: 'newtenant',
   validate
-})(NewTenantForm)
+})(NewTenant)

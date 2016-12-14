@@ -2,7 +2,7 @@ import { Map } from 'immutable'
 import MenuItem from 'material-ui/MenuItem'
 import React, { PropTypes } from 'react'
 
-import ReduxFormSelectField from '../ReduxFormSelectField.js'
+import SelectField from './SelectField.js'
 
 import { SERVICETYPE_VALUES } from '../../lib/values.js'
 
@@ -13,11 +13,11 @@ export const ServiceTypeField = ({ input, label, meta, tenantsMap }) => {
     meta
   }
   return (
-    <ReduxFormSelectField {...fieldProps}>
+    <SelectField {...fieldProps}>
       { SERVICETYPE_VALUES.map((value) => (
         <MenuItem key={value} value={value} primaryText={value} />
       )) }
-    </ReduxFormSelectField>
+    </SelectField>
   )
 }
 

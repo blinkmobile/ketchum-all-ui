@@ -2,25 +2,25 @@ import { Map } from 'immutable'
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
-import ServiceTypeField from './fields/ServiceTypeField.js'
-import ServiceRelation from './fields/ServiceRelation.js'
-import TenantRelation from './fields/TenantRelation.js'
-import PartnersRelation from './fields/PartnersRelation.js'
-import ReduxFormTextField from './ReduxFormTextField.js'
-import { validate } from '../forms/newproject.js'
+import ServiceTypeField from '../fields/ServiceTypeField.js'
+import ServiceRelation from '../fields/ServiceRelation.js'
+import TenantRelation from '../fields/TenantRelation.js'
+import PartnersRelation from '../fields/PartnersRelation.js'
+import TextField from '../fields/TextField.js'
+import { validate } from '../../forms/newproject.js'
 
-import './NewProjectForm.css'
+import './NewProject.css'
 
 const fields = [
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Name',
     name: 'name',
     title: 'short-unique-lower-case',
     type: 'text'
   },
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Label',
     name: 'label',
     title: 'Organisation Name',
@@ -33,14 +33,14 @@ const fields = [
     title: ''
   },
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'URL',
     name: 'url',
     title: '',
     type: 'url'
   },
   {
-    component: ReduxFormTextField,
+    component: TextField,
     label: 'Note',
     name: 'note',
     title: 'other details...',
@@ -48,7 +48,7 @@ const fields = [
   }
 ]
 
-const NewProjectForm = ({ onSubmit }) => (
+const NewProject = ({ onSubmit }) => (
   <form onSubmit={onSubmit}>
     <TenantRelation name='customer' label='Customer' />
     { fields.map((fieldProps) => (
@@ -59,7 +59,7 @@ const NewProjectForm = ({ onSubmit }) => (
   </form>
 )
 
-NewProjectForm.propTypes = {
+NewProject.propTypes = {
   onSubmit: PropTypes.func
 }
 
@@ -69,4 +69,4 @@ export default reduxForm({
     serviceType: 'api'
   }),
   validate
-})(NewProjectForm)
+})(NewProject)

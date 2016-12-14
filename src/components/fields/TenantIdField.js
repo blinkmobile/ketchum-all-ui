@@ -4,7 +4,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
 import { getTenantsMap } from '../../redux/reducers/tenants.js'
-import ReduxFormSelectField from '../ReduxFormSelectField.js'
+import SelectField from './SelectField.js'
 
 export const TenantIdField = ({ input, label, meta, tenantsMap }) => {
   const fieldProps = {
@@ -13,14 +13,14 @@ export const TenantIdField = ({ input, label, meta, tenantsMap }) => {
     meta
   }
   return (
-    <ReduxFormSelectField {...fieldProps}>
+    <SelectField {...fieldProps}>
       { Array.from(tenantsMap.entries()).map(([ id, tenant ]) => {
         const label = tenant.get('label') || tenant.get('name')
         return (
           <MenuItem key={id} value={id} primaryText={label} />
         )
       }) }
-    </ReduxFormSelectField>
+    </SelectField>
   )
 }
 

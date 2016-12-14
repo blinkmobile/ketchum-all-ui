@@ -6,7 +6,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { getFormValues } from 'redux-form/immutable'
 
-import NewCloudaccountForm from '../components/NewCloudaccountForm.js'
+import NewCloudaccount from '../components/forms/NewCloudaccount.js'
 import { createCloudaccountsSubmit } from '../redux/actions/cloudaccounts.js'
 import { validate } from '../forms/newcloudaccount.js'
 
@@ -48,7 +48,7 @@ class CloudaccountsNew extends Component {
 
     return (
       <Dialog {...dialogProps}>
-        <NewCloudaccountForm onSubmit={this.handleSubmit} />
+        <NewCloudaccount onSubmit={this.handleSubmit} />
       </Dialog>
     )
   }

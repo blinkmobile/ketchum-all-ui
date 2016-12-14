@@ -1,5 +1,7 @@
 /* @flow */
 
+import { Map } from 'immutable'
+
 import { store } from '../redux/store.js'
 import { getServicesMap } from '../redux/reducers/services.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
@@ -51,7 +53,7 @@ export const validate = (values /* : Object */) => {
 
   const partnersErrors = values.has('partners') && values.get('partners')
     .map((partner) => {
-      if (!partner.get('id')) {
+      if (!Map.isMap(partner) || !partner.get('id')) {
         return 'required'
       }
       if (partner.get('id') === customer.get('id')) {

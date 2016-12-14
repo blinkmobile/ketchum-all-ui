@@ -2,26 +2,26 @@ import { Map } from 'immutable'
 import MenuItem from 'material-ui/MenuItem'
 import React, { PropTypes } from 'react'
 
-import ReduxFormSelectField from './ReduxFormSelectField.js'
+import SelectField from './SelectField.js'
 
-import { TENANCY_VALUES } from '../lib/values.js'
+import { TENANCY_VALUES } from '../../lib/values.js'
 
-export const ReduxFormTenancyField = ({ input, label, meta, tenantsMap }) => {
+export const TenancyField = ({ input, label, meta, tenantsMap }) => {
   const fieldProps = {
     input,
     label,
     meta
   }
   return (
-    <ReduxFormSelectField {...fieldProps}>
+    <SelectField {...fieldProps}>
       { TENANCY_VALUES.map((value) => (
         <MenuItem key={value} value={value} primaryText={value} />
       )) }
-    </ReduxFormSelectField>
+    </SelectField>
   )
 }
 
-ReduxFormTenancyField.propTypes = {
+TenancyField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   meta: PropTypes.object,
@@ -30,4 +30,4 @@ ReduxFormTenancyField.propTypes = {
   tenantsMap: PropTypes.instanceOf(Map)
 }
 
-export default ReduxFormTenancyField
+export default TenancyField
