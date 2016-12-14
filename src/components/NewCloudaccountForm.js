@@ -4,13 +4,19 @@ import { Field, reduxForm } from 'redux-form/immutable'
 
 import ReduxFormTextField from './ReduxFormTextField.js'
 import ReduxFormTenancyField from './ReduxFormTenancyField.js'
-import ReduxFormTenantField from './ReduxFormTenantField.js'
+import TenantRelation from './fields/TenantRelation.js'
 import ReduxFormVendorField from './ReduxFormVendorField.js'
 import { validate } from '../forms/newcloudaccount.js'
 
 import './NewCloudaccountForm.css'
 
 const fields = [
+  {
+    component: ReduxFormTenancyField,
+    label: 'Tenancy',
+    name: 'tenancy',
+    title: 'shared service? or private?'
+  },
   {
     component: ReduxFormTextField,
     label: 'Name',
@@ -27,40 +33,29 @@ const fields = [
   },
   {
     component: ReduxFormTextField,
-    label: 'Note',
-    name: 'note',
-    title: 'other details...',
-    type: 'textarea'
-  },
-  {
-    component: ReduxFormTextField,
     label: 'Account ID',
     name: 'accountId',
     title: 'numbers',
     type: 'text'
   },
   {
-    component: ReduxFormTenancyField,
-    label: 'Tenancy',
-    name: 'tenancy',
-    title: 'shared service? or private?'
-  },
-  {
-    component: ReduxFormTenantField,
-    label: 'Tenant',
-    name: 'tenant',
-    title: 'customer, partner, or other organisation'
-  },
-  {
     component: ReduxFormVendorField,
     label: 'Vendor',
     name: 'vendor',
     title: ''
+  },
+  {
+    component: ReduxFormTextField,
+    label: 'Note',
+    name: 'note',
+    title: 'other details...',
+    type: 'textarea'
   }
 ]
 
 const NewCloudaccountForm = ({ onSubmit }) => (
   <form onSubmit={onSubmit}>
+    <TenantRelation name='tenant' label='Tenant' />
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
     )) }

@@ -6,7 +6,7 @@ import { getTenantsMap } from '../redux/reducers/tenants.js'
 import { TENANCY_VALUES, VENDOR_VALUES } from '../lib/values.js'
 
 export const preSubmit = (values /* : Object */) /* : Object */ => Object.assign({}, values, {
-  tenant: { id: values.tenant, type: 'tenants' }
+  tenant: Object.assign({}, values.tenant, { type: 'tenants' })
 })
 
 export const validate = (values /* : Object */) => {
@@ -41,10 +41,10 @@ export const validate = (values /* : Object */) => {
   }
 
   const tenant = values.get('tenant')
-  if (!tenant) {
+  if (!tenant || !tenant.get('id')) {
     errors.tenant = 'required'
-  } else if (!getTenantsMap(store.getState()).has(tenant)) {
-    errors.tenant = 'refers to missing / non-existant tenant'
+  } else if (!getTenantsMap(store.getState()).has(tenant.get('id'))) {
+    errors.tenant = 'refers to missing / non-existant customer'
   }
 
   return errors

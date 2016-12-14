@@ -3,12 +3,10 @@ import MenuItem from 'material-ui/MenuItem'
 import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 
-import { getTenantsMap } from '../redux/reducers/tenants.js'
-import ReduxFormSelectField from './ReduxFormSelectField.js'
+import { getTenantsMap } from '../../redux/reducers/tenants.js'
+import ReduxFormSelectField from '../ReduxFormSelectField.js'
 
-import './ReduxFormTenantField.css'
-
-export const ReduxFormTenantField = ({ input, label, meta, tenantsMap }) => {
+export const TenantIdField = ({ input, label, meta, tenantsMap }) => {
   const fieldProps = {
     input,
     label,
@@ -26,7 +24,7 @@ export const ReduxFormTenantField = ({ input, label, meta, tenantsMap }) => {
   )
 }
 
-ReduxFormTenantField.propTypes = {
+TenantIdField.propTypes = {
   input: PropTypes.object,
   label: PropTypes.string,
   meta: PropTypes.object,
@@ -39,4 +37,4 @@ const mapStateToProps = (state) => ({
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {}
-export default connect(mapStateToProps, mapDispatchToProps)(ReduxFormTenantField)
+export default connect(mapStateToProps, mapDispatchToProps)(TenantIdField)
