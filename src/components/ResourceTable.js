@@ -7,7 +7,7 @@ import './ResourceTable.css'
 
 const ResourceTable = ({ children, headings, onSelect }) => (
   <Table multiSelectable onRowSelection={onSelect}>
-    <TableHeader>
+    <TableHeader displaySelectAll={false} enableSelectAll={false}>
       <TableRow>
         { headings.map((heading) => (
           <TableHeaderColumn key={heading}>{heading}</TableHeaderColumn>
