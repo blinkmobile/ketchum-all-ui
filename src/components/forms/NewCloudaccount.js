@@ -2,6 +2,7 @@ import { Map } from 'immutable'
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
+import Form from './Form.js'
 import TextField from '../fields/TextField.js'
 import TenancyField from '../fields/TenancyField.js'
 import TenantRelation from '../fields/TenantRelation.js'
@@ -54,12 +55,12 @@ const fields = [
 ]
 
 const NewCloudaccount = ({ onSubmit }) => (
-  <form onSubmit={onSubmit}>
+  <Form onSubmit={onSubmit}>
     <TenantRelation name='tenant' label='Tenant' />
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
     )) }
-  </form>
+  </Form>
 )
 
 NewCloudaccount.propTypes = {

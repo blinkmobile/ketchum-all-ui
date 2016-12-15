@@ -3,6 +3,7 @@ import React, { PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Field, getFormValues, reduxForm } from 'redux-form/immutable'
 
+import Form from './Form.js'
 import CloudaccountRelation from '../fields/CloudaccountRelation.js'
 import CloudaccountsRelation from '../fields/CloudaccountsRelation.js'
 import ServiceTypeField from '../fields/ServiceTypeField.js'
@@ -57,7 +58,7 @@ const fields = [
 ]
 
 const NewService = ({ onSubmit, values }) => (
-  <form onSubmit={onSubmit}>
+  <Form onSubmit={onSubmit}>
     <TenantRelation name='tenant' label='Tenant' />
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
@@ -66,7 +67,7 @@ const NewService = ({ onSubmit, values }) => (
     { values && values.get('serviceType') === 'api' && (
       <CloudaccountRelation name='deploycloudaccount' label='Cloud Account for Deployments' />
     ) }
-  </form>
+  </Form>
 )
 
 NewService.propTypes = {

@@ -1,6 +1,7 @@
 import React, { PropTypes } from 'react'
 import { Field, reduxForm } from 'redux-form/immutable'
 
+import Form from './Form.js'
 import TextField from '../fields/TextField.js'
 import { validate } from '../../forms/newtenant.js'
 
@@ -31,11 +32,11 @@ const fields = [
 ]
 
 const NewTenant = ({ onSubmit }) => (
-  <form onSubmit={onSubmit}>
+  <Form onSubmit={onSubmit}>
     { fields.map((fieldProps) => (
       <Field key={fieldProps.name} {...fieldProps} />
     )) }
-  </form>
+  </Form>
 )
 
 NewTenant.propTypes = {
