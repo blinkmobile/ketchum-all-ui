@@ -1,5 +1,12 @@
 .RelatedPartners {
   list-style: none;
-  margin: 1rem;
   padding: 0;
+  width: 100%;
+}
+
+.RelatedPartner {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
 }

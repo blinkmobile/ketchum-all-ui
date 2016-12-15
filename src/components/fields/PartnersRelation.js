@@ -12,7 +12,7 @@ import './PartnersRelation.css'
 const RelatedPartners = ({ fields, meta: { touched, error } }) => (
   <ul className='RelatedPartners'>
     { fields.map((tenant, index) => (
-      <li key={index}>
+      <li className='RelatedPartner' key={index}>
         <Field name={`${tenant}.id`} label={'Partner'} component={TenantIdField} />
         <FlatButton label='Remove' secondary onClick={() => fields.remove(index)} />
       </li>

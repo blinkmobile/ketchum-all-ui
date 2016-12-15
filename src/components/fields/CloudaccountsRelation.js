@@ -12,7 +12,7 @@ import './CloudaccountsRelation.css'
 const RelatedCloudaccounts = ({ fields, meta: { touched, error } }) => (
   <ul className='RelatedCloudaccounts'>
     { fields.map((cloudaccount, index) => (
-      <li key={index}>
+      <li className='RelatedCloudaccount' key={index}>
         <Field name={`${cloudaccount}.id`} label={'Cloud Account'} component={CloudaccountIdField} />
         <FlatButton label='Remove' secondary onClick={() => fields.remove(index)} />
       </li>
