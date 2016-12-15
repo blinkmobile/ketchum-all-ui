@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 
 import { deleteCloudaccountsSubmit } from '../redux/actions/cloudaccounts.js'
 import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
+import { getTenantsMap } from '../redux/reducers/tenants.js'
 
 import NotFound from './NotFound.js'
 import ResourceCard from '../components/ResourceCard.js'
@@ -24,15 +25,25 @@ class Cloudaccount extends PureComponent {
   }
 
   render () {
-    const { cloudaccountsMap, params } = this.props
+    const { cloudaccountsMap, tenantsMap, params } = this.props
     const cloudaccount = cloudaccountsMap.get(params.id)
     if (!cloudaccount) {
       return <NotFound params={params} />
     }
 
+    const tenantId = cloudaccount.getIn([ 'tenant', 'id' ])
+    let tenant
+    if (tenantId && tenantsMap.has(tenantId)) {
+      tenant = tenantsMap.get(tenantId)
+    }
+
     return (
       <RouteSection>
         <ResourceCard resource={cloudaccount} onDeleteClick={this.handleDeleteClick} />
+
+        { tenant && (
+          <ResourceCard resource={tenant} />
+        ) }
       </RouteSection>
     )
   }
@@ -44,13 +55,15 @@ Cloudaccount.propTypes = {
 
   // mapStateToProps
   cloudaccountsMap: PropTypes.instanceOf(Map),
+  tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
   deleteCloudaccountsSubmit: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  cloudaccountsMap: getCloudaccountsMap(state)
+  cloudaccountsMap: getCloudaccountsMap(state),
+  tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
   deleteCloudaccountsSubmit

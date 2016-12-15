@@ -33,6 +33,14 @@ class Tenant extends PureComponent {
     return (
       <RouteSection>
         <ResourceCard resource={tenant} onDeleteClick={this.handleDeleteClick} />
+
+        { tenant.get('partners')
+          .map((tenant) => tenant.get('id'))
+          .filter((tenantId) => tenantsMap.has(tenantId))
+          .map((tenantId) => (
+            <ResourceCard key={tenantId} resource={tenantsMap.get(tenantId)} />
+          ))
+        }
       </RouteSection>
     )
   }

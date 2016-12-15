@@ -3,7 +3,9 @@ import React, { PropTypes, PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import { deleteServicesSubmit } from '../redux/actions/services.js'
+import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
 import { getServicesMap } from '../redux/reducers/services.js'
+import { getTenantsMap } from '../redux/reducers/tenants.js'
 
 import NotFound from './NotFound.js'
 import ResourceCard from '../components/ResourceCard.js'
@@ -24,15 +26,35 @@ class Service extends PureComponent {
   }
 
   render () {
-    const { servicesMap, params } = this.props
+    const {
+      cloudaccountsMap, servicesMap, tenantsMap, params
+    } = this.props
     const service = servicesMap.get(params.id)
     if (!service) {
       return <NotFound params={params} />
     }
 
+    const tenantId = service.getIn([ 'tenant', 'id' ])
+    let tenant
+    if (tenantId && tenantsMap.has(tenantId)) {
+      tenant = tenantsMap.get(tenantId)
+    }
+
     return (
       <RouteSection>
         <ResourceCard resource={service} onDeleteClick={this.handleDeleteClick} />
+
+        { tenant && (
+          <ResourceCard resource={tenant} />
+        ) }
+
+        { service.get('cloudaccounts')
+          .map((cloudaccount) => cloudaccount.get('id'))
+          .filter((cloudaccountId) => cloudaccountsMap.has(cloudaccountId))
+          .map((cloudaccountId) => (
+            <ResourceCard key={cloudaccountId} resource={cloudaccountsMap.get(cloudaccountId)} />
+          ))
+        }
       </RouteSection>
     )
   }
@@ -43,14 +65,18 @@ Service.propTypes = {
   params: PropTypes.object,
 
   // mapStateToProps
+  cloudaccountsMap: PropTypes.instanceOf(Map),
   servicesMap: PropTypes.instanceOf(Map),
+  tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
   deleteServicesSubmit: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
-  servicesMap: getServicesMap(state)
+  cloudaccountsMap: getCloudaccountsMap(state),
+  servicesMap: getServicesMap(state),
+  tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
   deleteServicesSubmit
