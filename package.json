@@ -10,6 +10,7 @@
     "immutable": "^3.8.1",
     "jsonapi-client": "https://github.com/holidayextras/jsonapi-client#0.8.0",
     "localforage": "^1.4.3",
+    "lodash.intersection": "^4.4.0",
     "lodash.startcase": "^4.4.0",
     "material-ui": "^0.16.4",
     "react": "^15.4.0",

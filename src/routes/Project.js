@@ -1,6 +1,4 @@
 import { Map } from 'immutable'
-import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import React, { PropTypes, PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -8,6 +6,7 @@ import { deleteProjectsSubmit } from '../redux/actions/projects.js'
 import { getProjectsMap } from '../redux/reducers/projects.js'
 
 import NotFound from './NotFound.js'
+import ResourceCard from '../components/ResourceCard.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Project.css'
@@ -31,13 +30,9 @@ class Project extends PureComponent {
       return <NotFound params={params} />
     }
 
-    const json = JSON.stringify(project.toJS(), null, 2)
     return (
       <RouteSection>
-        <Paper style={{ padding: '1rem' }}>
-          <pre><code>{json}</code></pre>
-          <RaisedButton label='Delete' secondary onClick={this.handleDeleteClick} />
-        </Paper>
+        <ResourceCard resource={project} onDeleteClick={this.handleDeleteClick} />
       </RouteSection>
     )
   }

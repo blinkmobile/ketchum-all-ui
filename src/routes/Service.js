@@ -1,6 +1,4 @@
 import { Map } from 'immutable'
-import Paper from 'material-ui/Paper'
-import RaisedButton from 'material-ui/RaisedButton'
 import React, { PropTypes, PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -8,6 +6,7 @@ import { deleteServicesSubmit } from '../redux/actions/services.js'
 import { getServicesMap } from '../redux/reducers/services.js'
 
 import NotFound from './NotFound.js'
+import ResourceCard from '../components/ResourceCard.js'
 import RouteSection from '../components/RouteSection.js'
 
 import './Service.css'
@@ -31,13 +30,9 @@ class Service extends PureComponent {
       return <NotFound params={params} />
     }
 
-    const json = JSON.stringify(service.toJS(), null, 2)
     return (
       <RouteSection>
-        <Paper style={{ padding: '1rem' }}>
-          <pre><code>{json}</code></pre>
-          <RaisedButton label='Delete' secondary onClick={this.handleDeleteClick} />
-        </Paper>
+        <ResourceCard resource={service} onDeleteClick={this.handleDeleteClick} />
       </RouteSection>
     )
   }
