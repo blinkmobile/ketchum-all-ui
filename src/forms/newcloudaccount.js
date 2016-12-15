@@ -1,9 +1,8 @@
 /* @flow */
 
+import { TENANCY_VALUES, VENDOR_VALUES } from '../lib/values.js'
 import { store } from '../redux/store.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
-
-import { TENANCY_VALUES, VENDOR_VALUES } from '../lib/values.js'
 
 export const preSubmit = (values /* : Object */) /* : Object */ => Object.assign({}, values, {
   tenant: Object.assign({}, values.tenant, { type: 'tenants' })

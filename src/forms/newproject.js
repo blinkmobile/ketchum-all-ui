@@ -2,11 +2,10 @@
 
 import { Map } from 'immutable'
 
+import { SERVICETYPE_VALUES } from '../lib/values.js'
 import { store } from '../redux/store.js'
 import { getServicesMap } from '../redux/reducers/services.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
-
-import { SERVICETYPE_VALUES } from '../lib/values.js'
 
 export const preSubmit = (values /* : Object */) /* : Object */ => {
   values = Object.assign({}, values, {
