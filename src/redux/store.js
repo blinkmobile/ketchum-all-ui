@@ -1,20 +1,31 @@
 /* @flow */
 
-import localForage from 'localforage/dist/localforage.nopromises.js'
 import { applyMiddleware, createStore, compose } from 'redux'
 import { autoRehydrate, persistStore } from 'redux-persist-immutable'
 import ReduxThunk from 'redux-thunk'
-import { hashHistory } from 'react-router'
+import { createMemoryHistory, hashHistory } from 'react-router'
 import { routerMiddleware, syncHistoryWithStore } from 'react-router-redux'
 import { createSelector } from 'reselect'
 
 import reducer from './reducer.js'
 import { getRouting } from './reducers/routing.js'
 
+const isStorageAvailable = !!(global.indexedDB || global.localStorage)
+
+const routerHistory = process.env.NODE_ENV === 'test' ? createMemoryHistory() : hashHistory
+
 const middleware = [
-  routerMiddleware(hashHistory),
+  routerMiddleware(routerHistory),
   ReduxThunk
 ]
+
+const enhancers = [
+  applyMiddleware(...middleware)
+]
+
+if (isStorageAvailable) {
+  enhancers.push(autoRehydrate())
+}
 
 const composeEnhancers = (
   process.env.NODE_ENV !== 'production' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -23,14 +34,14 @@ const composeEnhancers = (
 export const store = createStore(
   reducer,
   undefined,
-  composeEnhancers(
-    autoRehydrate(),
-    applyMiddleware(...middleware),
-  )
+  composeEnhancers(...enhancers)
 )
 
-persistStore(store, { storage: localForage })
+if (isStorageAvailable) {
+  const localForage = require('localforage/dist/localforage.nopromises.js')
+  persistStore(store, { storage: localForage })
+}
 
-export const history = syncHistoryWithStore(hashHistory, store, {
+export const history = syncHistoryWithStore(routerHistory, store, {
   selectLocationState: createSelector(getRouting, (routing) => routing.toJS())
 })
