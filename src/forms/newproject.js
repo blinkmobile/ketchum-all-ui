@@ -55,7 +55,7 @@ export const validate = (values /* : Object */) => {
       if (!Map.isMap(partner) || !partner.get('id')) {
         return 'required'
       }
-      if (partner.get('id') === customer.get('id')) {
+      if (customer && partner.get('id') === customer.get('id')) {
         return 'should be different to customer'
       }
       if (!getTenantsMap(store.getState()).has(partner.get('id'))) {
