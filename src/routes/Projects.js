@@ -1,21 +1,17 @@
-import { Map, Set } from 'immutable'
-import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
+import { Map } from 'immutable'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 
 import {
-  resourceMapToArray, rowIndicesToResourceIds
+  resourceMapToArray, rowIndexToResourceId
 } from '../lib/rows.js'
-import {
-  deleteSelectedProjects, requestProjects, selectProjects
-} from '../redux/actions/projects.js'
-import {
-  getProjectsMap, getSelectedProjects
-} from '../redux/reducers/projects.js'
+import { requestProjects } from '../redux/actions/projects.js'
+import { getProjectsMap } from '../redux/reducers/projects.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
 import ResourceTable from '../components/ResourceTable.js'
 import RouteSection from '../components/RouteSection.js'
@@ -26,30 +22,26 @@ class Projects extends Component {
   constructor (props) {
     super(props)
 
-    this.handleSelect = this.handleSelect.bind(this)
+    this.handleCellClick = this.handleCellClick.bind(this)
   }
 
   componentDidMount () {
     this.props.requestProjects()
   }
 
-  handleSelect (rowsSelected) {
-    const { selectProjects, projectsMap } = this.props
-    const selectedProjects = rowIndicesToResourceIds(
-      projectsMap,
-      rowsSelected
-    )
-    selectProjects(selectedProjects)
+  handleCellClick (row, col) {
+    const { projectsMap, push } = this.props
+    push('/projects/' + rowIndexToResourceId(projectsMap, row))
   }
 
   render () {
     const {
-      children, projectsMap, deleteSelectedProjects, selectedProjects, tenantsMap
+      children, projectsMap, tenantsMap
     } = this.props
 
     const tableProps = {
       headings: [ 'Label', 'Type', 'Tenant', 'URL' ],
-      onSelect: this.handleSelect
+      onCellClick: this.handleCellClick
     }
 
     return (
@@ -65,7 +57,7 @@ class Projects extends Component {
               tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
             }
             return (
-              <TableRow key={id} selected={selectedProjects.has(id)}>
+              <TableRow key={id}>
                 <TableRowColumn title={name}>{label || name}</TableRowColumn>
                 <TableRowColumn>{serviceType}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
@@ -81,10 +73,6 @@ class Projects extends Component {
           </FloatingActionButton>
         </Link>
 
-        <FloatingActionButton className='ProjectsDeleteFAB' secondary title='delete' onClick={deleteSelectedProjects}>
-          <ActionDelete />
-        </FloatingActionButton>
-
         {children}
       </RouteSection>
     )
@@ -96,23 +84,19 @@ Projects.propTypes = {
 
   // mapStateToProps
   projectsMap: PropTypes.instanceOf(Map),
-  selectedProjects: PropTypes.instanceOf(Set),
   tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
-  deleteSelectedProjects: PropTypes.func,
-  requestProjects: PropTypes.func,
-  selectProjects: PropTypes.func
+  push: PropTypes.func,
+  requestProjects: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   projectsMap: getProjectsMap(state),
-  selectedProjects: getSelectedProjects(state),
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
-  deleteSelectedProjects,
-  requestProjects,
-  selectProjects
+  push,
+  requestProjects
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Projects)

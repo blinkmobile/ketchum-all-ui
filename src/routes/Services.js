@@ -1,21 +1,17 @@
-import { Map, Set } from 'immutable'
-import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
+import { Map } from 'immutable'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 
 import {
-  resourceMapToArray, rowIndicesToResourceIds
+  resourceMapToArray, rowIndexToResourceId
 } from '../lib/rows.js'
-import {
-  deleteSelectedServices, requestServices, selectServices
-} from '../redux/actions/services.js'
-import {
-  getServicesMap, getSelectedServices
-} from '../redux/reducers/services.js'
+import { requestServices } from '../redux/actions/services.js'
+import { getServicesMap } from '../redux/reducers/services.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
 import ResourceTable from '../components/ResourceTable.js'
 import RouteSection from '../components/RouteSection.js'
@@ -26,30 +22,26 @@ class Services extends Component {
   constructor (props) {
     super(props)
 
-    this.handleSelect = this.handleSelect.bind(this)
+    this.handleCellClick = this.handleCellClick.bind(this)
   }
 
   componentDidMount () {
     this.props.requestServices()
   }
 
-  handleSelect (rowsSelected) {
-    const { selectServices, servicesMap } = this.props
-    const selectedServices = rowIndicesToResourceIds(
-      servicesMap,
-      rowsSelected
-    )
-    selectServices(selectedServices)
+  handleCellClick (row, col) {
+    const { servicesMap, push } = this.props
+    push('/services/' + rowIndexToResourceId(servicesMap, row))
   }
 
   render () {
     const {
-      children, servicesMap, deleteSelectedServices, selectedServices, tenantsMap
+      children, servicesMap, tenantsMap
     } = this.props
 
     const tableProps = {
       headings: [ 'Label', 'Type', 'Tenant', 'Tenancy' ],
-      onSelect: this.handleSelect
+      onCellClick: this.handleCellClick
     }
 
     return (
@@ -65,7 +57,7 @@ class Services extends Component {
               tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
             }
             return (
-              <TableRow key={id} selected={selectedServices.has(id)}>
+              <TableRow key={id}>
                 <TableRowColumn title={name}>{label || name}</TableRowColumn>
                 <TableRowColumn>{serviceType}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
@@ -81,10 +73,6 @@ class Services extends Component {
           </FloatingActionButton>
         </Link>
 
-        <FloatingActionButton className='ServicesDeleteFAB' secondary title='delete' onClick={deleteSelectedServices}>
-          <ActionDelete />
-        </FloatingActionButton>
-
         {children}
       </RouteSection>
     )
@@ -96,23 +84,19 @@ Services.propTypes = {
 
   // mapStateToProps
   servicesMap: PropTypes.instanceOf(Map),
-  selectedServices: PropTypes.instanceOf(Set),
   tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
-  deleteSelectedServices: PropTypes.func,
-  requestServices: PropTypes.func,
-  selectServices: PropTypes.func
+  push: PropTypes.func,
+  requestServices: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   servicesMap: getServicesMap(state),
-  selectedServices: getSelectedServices(state),
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
-  deleteSelectedServices,
-  requestServices,
-  selectServices
+  push,
+  requestServices
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Services)

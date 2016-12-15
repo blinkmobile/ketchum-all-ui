@@ -5,16 +5,16 @@ import React, { PropTypes } from 'react'
 
 import './ResourceTable.css'
 
-const ResourceTable = ({ children, headings, onSelect }) => (
-  <Table multiSelectable onRowSelection={onSelect}>
-    <TableHeader displaySelectAll={false} enableSelectAll={false}>
+const ResourceTable = ({ children, headings, onCellClick }) => (
+  <Table selectable={false} onCellClick={onCellClick}>
+    <TableHeader adjustForCheckbox={false} displaySelectAll={false}>
       <TableRow>
         { headings.map((heading) => (
           <TableHeaderColumn key={heading}>{heading}</TableHeaderColumn>
         )) }
       </TableRow>
     </TableHeader>
-    <TableBody deselectOnClickaway={false}>
+    <TableBody displayRowCheckbox={false}>
       {children}
     </TableBody>
   </Table>
@@ -23,7 +23,7 @@ const ResourceTable = ({ children, headings, onSelect }) => (
 ResourceTable.propTypes = {
   children: PropTypes.node,
   headings: PropTypes.array,
-  onSelect: PropTypes.func
+  onCellClick: PropTypes.func
 }
 
 export default ResourceTable

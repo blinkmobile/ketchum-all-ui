@@ -1,21 +1,17 @@
-import { Map, Set } from 'immutable'
-import ActionDelete from 'material-ui/svg-icons/action/delete-forever'
+import { Map } from 'immutable'
 import ContentAdd from 'material-ui/svg-icons/content/add'
 import FloatingActionButton from 'material-ui/FloatingActionButton'
 import { TableRow, TableRowColumn } from 'material-ui/Table'
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
+import { push } from 'react-router-redux'
 
 import {
-  resourceMapToArray, rowIndicesToResourceIds
+  resourceMapToArray, rowIndexToResourceId
 } from '../lib/rows.js'
-import {
-  deleteSelectedCloudaccounts, requestCloudaccounts, selectCloudaccounts
-} from '../redux/actions/cloudaccounts.js'
-import {
-  getCloudaccountsMap, getSelectedCloudaccounts
-} from '../redux/reducers/cloudaccounts.js'
+import { requestCloudaccounts } from '../redux/actions/cloudaccounts.js'
+import { getCloudaccountsMap } from '../redux/reducers/cloudaccounts.js'
 import { getTenantsMap } from '../redux/reducers/tenants.js'
 import ResourceTable from '../components/ResourceTable.js'
 import RouteSection from '../components/RouteSection.js'
@@ -26,30 +22,26 @@ class Cloudaccounts extends Component {
   constructor (props) {
     super(props)
 
-    this.handleSelect = this.handleSelect.bind(this)
+    this.handleCellClick = this.handleCellClick.bind(this)
   }
 
   componentDidMount () {
     this.props.requestCloudaccounts()
   }
 
-  handleSelect (rowsSelected) {
-    const { selectCloudaccounts, cloudaccountsMap } = this.props
-    const selectedCloudaccounts = rowIndicesToResourceIds(
-      cloudaccountsMap,
-      rowsSelected
-    )
-    selectCloudaccounts(selectedCloudaccounts)
+  handleCellClick (row, col) {
+    const { cloudaccountsMap, push } = this.props
+    push('/cloudaccounts/' + rowIndexToResourceId(cloudaccountsMap, row))
   }
 
   render () {
     const {
-      children, cloudaccountsMap, deleteSelectedCloudaccounts, selectedCloudaccounts, tenantsMap
+      children, cloudaccountsMap, tenantsMap
     } = this.props
 
     const tableProps = {
       headings: [ 'AccountID', 'Tenant', 'Tenancy' ],
-      onSelect: this.handleSelect
+      onCellClick: this.handleCellClick
     }
 
     return (
@@ -65,7 +57,7 @@ class Cloudaccounts extends Component {
               tenantLabel = tenantsMap.get(relatedTenant.id).get('label')
             }
             return (
-              <TableRow key={id} selected={selectedCloudaccounts.has(id)}>
+              <TableRow key={id}>
                 <TableRowColumn title={name}>{vendor} {accountId}</TableRowColumn>
                 <TableRowColumn>{tenantLabel}</TableRowColumn>
                 <TableRowColumn>{tenancy}</TableRowColumn>
@@ -80,10 +72,6 @@ class Cloudaccounts extends Component {
           </FloatingActionButton>
         </Link>
 
-        <FloatingActionButton className='CloudaccountsDeleteFAB' secondary title='delete' onClick={deleteSelectedCloudaccounts}>
-          <ActionDelete />
-        </FloatingActionButton>
-
         {children}
       </RouteSection>
     )
@@ -95,23 +83,19 @@ Cloudaccounts.propTypes = {
 
   // mapStateToProps
   cloudaccountsMap: PropTypes.instanceOf(Map),
-  selectedCloudaccounts: PropTypes.instanceOf(Set),
   tenantsMap: PropTypes.instanceOf(Map),
 
   // mapDispatchToProps
-  deleteSelectedCloudaccounts: PropTypes.func,
-  requestCloudaccounts: PropTypes.func,
-  selectCloudaccounts: PropTypes.func
+  push: PropTypes.func,
+  requestCloudaccounts: PropTypes.func
 }
 
 const mapStateToProps = (state) => ({
   cloudaccountsMap: getCloudaccountsMap(state),
-  selectedCloudaccounts: getSelectedCloudaccounts(state),
   tenantsMap: getTenantsMap(state)
 })
 const mapDispatchToProps = {
-  deleteSelectedCloudaccounts,
-  requestCloudaccounts,
-  selectCloudaccounts
+  push,
+  requestCloudaccounts
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Cloudaccounts)

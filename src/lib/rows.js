@@ -8,6 +8,15 @@ export const resourceMapToArray = (
   return Array.from(resourceMap.values())
 }
 
+export const rowIndexToResourceId = (
+  resourceMap /* : CollectionIdMap */,
+  index /* : number */
+) /* : string[] */ => {
+  const rows = resourceMapToArray(resourceMap)
+  const resource = rows[index]
+  return resource.get('id')
+}
+
 export const rowIndicesToResourceIds = (
   resourceMap /* : CollectionIdMap */,
   indices /* : number[] | 'all' */
